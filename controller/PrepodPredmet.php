@@ -1,4 +1,5 @@
 <?php
+require_once "ConnectDB.php";
 
 class PrepodPredmet
 {
@@ -25,18 +26,42 @@ class PrepodPredmet
         }
     }
 
-    public function outputPredmetSelector()
-    {
+    public function elementAddPredmet() {
         $sql = "SELECT id, name FROM predmet";
         $result = $this->_db->query($sql);
 
-        if ($result == true) {  //////////////////////////////////////////TESTING THIS CODE, HE ALL TIME OUT DATA TRUE. CHANGE TRUE ON ROWCOUNT
+        echo <<<HTML
+        <form method="POST" class="form-inline">
+            <div class="form-group">
+                <p class="form-control-static">Добавить из списка новый предмет: </p>
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="select_add_predmet">
+HTML;
+        if ($result->rowCount() > 0) {
             while ($row = $result->fetch()) {
                 echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
             }
         } else {
             echo '<option>Нет добавленых предметов</option>';
         }
+        echo <<<HTML
+                </select>
+            </div>
+            <button type="submit" class="btn btn-default" name="submit_select_add_predmet">Добавить</button>
+        </form>
+        <br />
+        <form method="POST" class="form-inline">
+            <div class="form-group">
+                <p class="form-control-static">Добавить новый предмет: </p>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="input_add_predmet">
+            </div>
+            <button type="submit" name="submit_input_add_predmet" class="btn btn-default">Добавить</button>
+        </form>
+HTML;
+
     }
 
     public function addPredmetSelector()

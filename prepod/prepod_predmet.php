@@ -70,34 +70,7 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'prepod') {
         </div>
     </div>
 
-    <!--Добавление нового предмета из списка и ввод нового предмета-->
-    <div class="col-sm-8 col-md-8">
-        <div id="add_predmet_form">
-            <form method="POST" class="form-inline">
-                <div class="form-group">
-                    <p class="form-control-static">Добавить из списка новый предмет: </p>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" name="select_add_predmet">
-                        <?php
-                        $pred->outputPredmetSelector();
-                        ?>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-default" name="submit_select_add_predmet">Внести</button>
-            </form>
-            <br />
-            <form method="POST" class="form-inline">
-                <div class="form-group">
-                    <p class="form-control-static">Добавить новый предмет: </p>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="input_add_predmet">
-                </div>
-                <button type="submit" name="submit_input_add_predmet" class="btn btn-default">Внести</button>
-            </form>
-        </div>
-    </div>
+
 
     <!--Блок семестра-->
     <div class="col-sm-4 col-md-4">

@@ -42,8 +42,7 @@ if (isset($_GET['exit'])) {
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.php">Предметы</a></li>
-                        <li><a href="#">Семестры</a></li>
-                        <li><a href="#">Группы</a></li>
+                        <li><a href="add.php">Добавить</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
