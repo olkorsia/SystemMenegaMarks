@@ -1,5 +1,5 @@
 <?php
-    require "ConnectDB.php";
+    require_once "ConnectDB.php";
 
     class Authorization
     {

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "../controller/PrepodSettings.php";
 
 if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'prepod') {
     header("Location: /");
@@ -40,16 +41,20 @@ if (isset($_GET['exit'])) {
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Предметы</a></li>
+                        <li class="active"><a href="index.php">Предметы</a></li>
                         <li><a href="#">Семестры</a></li>
                         <li><a href="#">Группы</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <p class="navbar-text"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?></p>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="settings.php">Настройки</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="?exit">Выход <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+                            </ul>
                         </li>
-                        <li><a href="#">Настройки</a></li>
-                        <li><a href="?exit">Выход</a></li>
                     </ul>
                 </div>
             </div>
@@ -57,6 +62,36 @@ if (isset($_GET['exit'])) {
     </div>
 </div>
 <!--//MENU NAVBAR-->
+
+<div class="container">
+    <div class="col-md-4">
+        <p style="text-align: center; font-size: medium">Изменение пароля</p>
+        <hr/>
+        <form method="POST">
+            <div class="form-group">
+                <input type="password" name="last_password" class="form-control" id="exampleInputEmail1" placeholder="Старый пароль" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="new_password" class="form-control" placeholder="Новый пароль" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="again_new_password" class="form-control" placeholder="Подтверждение пароля" required>
+            </div>
+            <button type="submit" class="btn btn-default">Изменить</button>
+        </form>
+    </div>
+</div>
+
+<?php
+    if (isset($_POST["last_password"])) {
+        if ($_POST['new_password'] === $_POST['again_new_password']) {
+            $chg = new PrepodSettings();
+            $chg->changePassword($_POST["last_password"], $_POST['new_password']);
+        } else {
+            echo 'Пароли не совподают';
+        }
+    }
+?>
 
 <script src="../js/bootstrap.min.js"></script>
 </body>

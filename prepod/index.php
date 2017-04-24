@@ -46,16 +46,20 @@ if (isset($_GET['exit'])) {
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Предметы</a></li>
+                        <li class="active"><a href="index.php">Предметы</a></li>
                         <li><a href="#">Семестры</a></li>
                         <li><a href="#">Группы</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <p class="navbar-text"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?></p>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="settings.php">Настройки</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="?exit">Выход <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+                            </ul>
                         </li>
-                        <li><a href="#">Настройки</a></li>
-                        <li><a href="?exit">Выход</a></li>
                     </ul>
                 </div>
             </div>
