@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e3c08dd8-74b2-4725-9005-b7eef4489f58" name="alexandrkorsia.myjino.ru" url="http://alexandrkorsia.myjino.ru">
+        <fileTransfer host="alexandrkorsia.myjino.ru" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
