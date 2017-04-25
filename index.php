@@ -15,7 +15,7 @@ require "controller/Registration.php";
     <link rel="stylesheet" type="text/css" href="css/login_registration_form.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
-<body style="background-image: url('images/background.jpg');">
+<body style="background-image: url('./images/background.jpg');">
 <?php
 if ($_SESSION['auth'] == 'prepod') {
 

@@ -24,9 +24,10 @@ if (isset($_GET['exit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/shadows.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
-<body>
+<body style="background-image: url('../images/background.jpg');">
 
 <!--MENU NAVBAR-->
 <div class="container">
@@ -67,7 +68,7 @@ if (isset($_GET['exit'])) {
 </div>
 <!--//MENU NAVBAR-->
 
-<div class="container">
+<div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
 
     <!--Вывод всех предметов-->
     <div class="col-sm-4 col-md-4">
@@ -110,14 +111,16 @@ if (isset($_GET['exit'])) {
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
     <div class="col-sm-12 col-md-12">
         <div class="table-responsive" id="mainPrepodTable">
 
         </div>
     </div>
+</div>
+
+<div class="container" style="margin-bottom: 40px">
+
 </div>
 
 <script src="../js/prepod_ajax.js"></script>

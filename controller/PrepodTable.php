@@ -14,10 +14,10 @@ class PrepodTable
     {
         echo '<script>alert('.$main_id.');</script>';
 
-        $view_sql = "CREATE VIEW view_table AS SELECT students.id student_id, subject.id subject_id, marks.mark marks_mark FROM students, marks, subject";
+        $view_sql = "CREATE VIEW view_table_mark AS SELECT students.id student_id, subject.id subject_id, marks.mark marks_mark FROM students INNER JOIN marks ON students.id=marks.student_id INNER JOIN subject ON marks.subject_id=subject.id";
         $this->_db->query($view_sql);
 
-        $sql = "SELECT * FROM view_table";
+        $sql = "SELECT * FROM view_table_mark";
         $result = $this->_db->query($sql);
 
         if ($result->rowCount() > 0) {

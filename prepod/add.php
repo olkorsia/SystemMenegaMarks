@@ -21,6 +21,7 @@ if (isset($_GET['exit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/shadows.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script type="text/javascript">
@@ -60,7 +61,7 @@ if (isset($_GET['exit'])) {
         });
     </script>
 </head>
-<body>
+<body style="background-image: url('../images/background.jpg');">
 
 <!--MENU NAVBAR-->
 <div class="container">
@@ -80,8 +81,8 @@ if (isset($_GET['exit'])) {
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.php">Предметы</a></li>
-                        <li><a href="#">Добавить</a></li>
+                        <li><a href="index.php">Главная</a></li>
+                        <li class="active"><a href="#">Добавить</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -104,10 +105,10 @@ if (isset($_GET['exit'])) {
 </div>
 <!--//MENU NAVBAR-->
 
-<div class="container">
+<div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <p style="text-align: center">Добавить</p>
+            <p style="text-align: center; font-size: medium">Добавить</p>
             <hr/>
             <select class="form-control" id="changeAddElement">
                 <option disabled selected>Выберите действие</option>
@@ -117,15 +118,9 @@ if (isset($_GET['exit'])) {
             </select>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <hr/>
-    </div>
-</div>
+    <hr/>
 
-<div class="container" style="margin-top: 20px">
     <div id="selectedAddElement">
 
     </div>
