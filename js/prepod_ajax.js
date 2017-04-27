@@ -25,7 +25,9 @@ $("#listSemestr").change(function () {
 });
 
 $("#listGroup").change(function () {
-    mainId = $("#listGroup option:selected").val();
+    var mainId = $("#listGroup option:selected").val();
+    var groupId = $("#listGroup").data("idGroup");
+    alert(groupId);
     $.ajax({
         type: "POST",
         async: false,

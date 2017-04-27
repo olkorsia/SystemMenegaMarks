@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "ConnectDB.php";
 
 class PrepodTable
@@ -10,52 +11,97 @@ class PrepodTable
         $this->_db = connectDB::getInstance();
     }
 
-    public function outputTableMarks($main_id)
+    public function outputTableMarks($predmet, $semestr, $group)
     {
-        echo '<script>alert('.$main_id.');</script>';
+        try {
+            $prepod = $_SESSION['prepod_id'];
 
-        $view_sql = "CREATE VIEW view_table_mark AS SELECT students.id student_id, subject.id subject_id, marks.mark marks_mark FROM students INNER JOIN marks ON students.id=marks.student_id INNER JOIN subject ON marks.subject_id=subject.id";
-        $this->_db->query($view_sql);
+            $sql = "SELECT main.id FROM main inner join groups ON main.group_id=groups.id WHERE main.prepod_id='$prepod' AND main.predmet_id='$predmet' AND main.semestr = '$semestr' AND main.group_id='$group'";
+            $result = $this->_db->query($sql);
 
-        $sql = "SELECT * FROM view_table_mark";
-        $result = $this->_db->query($sql);
+            $main_id = $result->fetch()['id'];
 
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo '<p>'.$row['student_id'].' '.$row['subject_id'].' '.$row['marks_mark'].'</p>';
+            $output = '';
+            //echo '<script>alert('.$main_id.');</script>';
+
+            $subject_sql = "SELECT DISTINCT subject.number FROM subject INNER JOIN marks ON subject.id=marks.subject_id WHERE marks.main_id='$main_id'";
+            $subject_result = $this->_db->query($subject_sql);
+
+            $output .= '<table class="table table-bordered">';
+            if ($subject_result->rowCount() > 0) {
+                $output .= '<tr>';
+                $output .= '<td  width="40%"></td>';
+
+                while ($row = $subject_result->fetch(PDO::FETCH_ASSOC)) {
+                    $output .= '<td width="5%">Т'.$row["number"].'</td>';
+                }
+
+                $output .= '<td width="5%"></td>';
+                $output .= '</tr>';
+
+                $student_sql = "SELECT DISTINCT students.id, students.name, students.surname FROM students INNER JOIN marks ON students.id=marks.student_id WHERE marks.main_id='$main_id'";
+                $student_result = $this->_db->query($student_sql);
+
+
+                while ($row = $student_result->fetch(PDO::FETCH_ASSOC)) {
+                    $output .= '<tr>';
+                    $output .= '<td>'.$row["surname"].' '.$row["name"].'</td>';
+
+                    $mark_sql = "SELECT id, mark FROM marks WHERE marks.main_id='$main_id' AND marks.student_id='".$row["id"]."'";
+                    $mark_result = $this->_db->query($mark_sql);
+
+                    while ($row_mark = $mark_result->fetch(PDO::FETCH_ASSOC)) {
+                        $output .= '<td data-id='.$row_mark["id"].' contenteditable>'.$row_mark["mark"].'</td>';
+                    }
+
+                    $output .= '<td width="5%"></td>';
+                    $output .= '</tr>';
+                }
+            } else {
+                $sql = "SELECT name, surname FROM students WHERE group_id='$group'";
+                $result = $this->_db->query($sql);
+
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    $output .= '<tr>';
+                    $output .= '<td>'.$row['surname'].' '.$row['name'].'</td>';
+                    $output .= '</tr>';
+                }
             }
+
+            $output .= '</table>';
+            echo $output;
+
+        } catch (PDOException $e) {
+            echo 'Database error: ' . $e->getMessage();
         }
 
 
-        /*echo '<table class="table table-bordered">';
-        $sql = "select number, name from marks inner join subject on marks.subject_id=subject.id where main_id='$main_id'";
-        $result = $this->_db->query($sql);
-        if ($result->rowCount() > 0) {
-            echo '<tr><td></td>';
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo '<td>T'.$row['number'].'</td>';
+        /*if(mysqli_num_rows($result) > 0)
+        {
+            while($row = mysqli_fetch_array($result))
+            {
+                $output .= '  
+                <tr>  
+                     <td>'.$row["id"].'</td>  
+                     <td class="first_name" data-id1="'.$row["id"].'" contenteditable>'.$row["first_name"].'</td>  
+                     <td class="last_name" data-id2="'.$row["id"].'" contenteditable>'.$row["last_name"].'</td>  
+                     <td><button type="button" name="delete_btn" data-id3="'.$row["id"].'" class="btn btn-xs btn-danger btn_delete">x</button></td>  
+                </tr>  
+           ';
             }
-            echo '</tr>';
-        } else {
-            echo 'Темы не найдены!';
+            $output .= '  
+           <tr>  
+                <td></td>  
+                <td id="first_name" contenteditable></td>  
+                <td id="last_name" contenteditable></td>  
+                <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+</button></td>  
+           </tr>  
+      ';
         }
+        else
+        {
 
-        $sql = "select name, surname, patronic, mark from marks inner join students on marks.student_id=students.id where main_id='$main_id'";
-        $result = $this->_db->query($sql);
-
-        if ($result->rowCount() > 0) {
-            echo '<tr>';
-            //$dataSNP = $result->fetch(PDO::FETCH_ASSOC);
-            //echo '<td>'.$dataSNP['surname'].' '.$dataSNP['name'].' '.$dataSNP['patronic'].'</td>';
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo '<td>'.$row['mark'].'</td>';
-            }
-            echo '</tr>';
-        } else {
-            echo 'Темы не найдены!';
-        }
-
-        echo '</table>';*/
+        }*/
     }
 }
 ?>

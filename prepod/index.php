@@ -123,7 +123,46 @@ if (isset($_GET['exit'])) {
 
 </div>
 
-<script src="../js/prepod_ajax.js"></script>
+<!--script src="../js/prepod_ajax.js"></script-->
+<script type="text/javascript">
+    var idPredmet, semestr, group;
+
+    $("#listPredmet").change(function () {
+        idPredmet = $("#listPredmet option:selected").val();
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_semestr.php",
+            data: ({id_predmet: idPredmet})
+        }).done(function (data) {
+            $("#listSemestr").html(data);
+        });
+    });
+
+    $("#listSemestr").change(function () {
+        semestr = $("#listSemestr option:selected").val();
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_group.php",
+            data: ({id_predmet: idPredmet, semestr: semestr})
+        }).done(function (data) {
+            $("#listGroup").html(data);
+        });
+    });
+
+    $("#listGroup").change(function () {
+        group = $("#listGroup option:selected").val();
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_mainTable.php",
+            data: ({id_predmet: idPredmet, semestr: semestr, id_group: group})
+        }).done(function (data) {
+            $("#mainPrepodTable").html(data);
+        });
+    });
+</script>
 <script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
