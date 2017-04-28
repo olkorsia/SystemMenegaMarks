@@ -18,6 +18,7 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'student') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/shadows.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script type="text/javascript">
@@ -36,7 +37,7 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'student') {
         });
     </script>
 </head>
-<body>
+<body style="background-image: url('../images/background.jpg');">
 
 <!--MENU NAVBAR-->
 <div class="container">
@@ -60,8 +61,13 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'student') {
                         <li><a href="results.php">Итоги</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <p class="navbar-text"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?></p>
-                        <?php if ($_SESSION['auth'] == 'student') { echo '<li><a href="?exit">Выход</a></li>'; }  ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <?php if ($_SESSION['auth'] == 'student') { echo '<li><a href="?exit">Выход <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>'; }  ?>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -71,7 +77,7 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'student') {
 <!--//MENU NAVBAR-->
 
 
-<div class="container">
+<div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
     <div id="idMarks">
 
         <div class="table-responsive">
@@ -133,31 +139,6 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'student') {
     </div>
 
 </div>
-
-<!--div class="container" id="idPredmet">
-    <p>Predmet</p>
-
-    <select class="selectpicker">
-        <option>Mustard</option>
-          <option>Ketchup</option>
-          <option>Relish</option>
-      </select>
-
-    <form class="form-inline" method="POST">
-        <div class="form-group">
-            <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Предметы <span class="caret"></span></button>
-
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">ИЗВП</a></li>
-                    <li><a href="#">ОПИ</a></li>
-                    <li><a href="#">ПП</a></li>
-                </ul>
-            </div>
-          </div>
-        <button type="submit" class="btn btn-default">Выбрать</button>
-    </form>
-</div-->
 
     <?php
         if (isset($_POST['inputSearch'])) {

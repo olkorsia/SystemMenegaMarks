@@ -27,8 +27,9 @@ class PrepodTable
             $subject_sql = "SELECT DISTINCT subject.number FROM subject INNER JOIN marks ON subject.id=marks.subject_id WHERE marks.main_id='$main_id'";
             $subject_result = $this->_db->query($subject_sql);
 
-            $output .= '<table class="table table-bordered">';
             if ($subject_result->rowCount() > 0) {
+                $output .= '<hr/>';
+                $output .= '<table class="table table-bordered">';
                 $output .= '<tr>';
                 $output .= '<td  width="40%"></td>';
 
@@ -57,51 +58,50 @@ class PrepodTable
                     $output .= '<td width="5%"></td>';
                     $output .= '</tr>';
                 }
+
+                $output .= '</table>';
+
+                //////////////////////////////////////////////////////////////
+
+                $two_subject_sql = "SELECT DISTINCT subject.name, subject.number FROM subject INNER JOIN marks ON subject.id=marks.subject_id WHERE marks.main_id='$main_id'";
+                $two_subject_result = $this->_db->query($two_subject_sql);
+
+                $output .= '<table class="table table-bordered" style="margin-top: 20px">';
+                $output .= '<tr>';
+                $output .= '<td width="20%" align="center">Номер темы</td>';
+                $output .= '<td width="20%" align="center">Название темы</td>';
+                $output .= '</tr>';
+
+                while ($row_subject = $two_subject_result->fetch(PDO::FETCH_ASSOC)) {
+                    $output .= '<tr>';
+                    $output .= '<td width="20%">Тема '.$row_subject["number"].'</td>';
+                    $output .= '<td width="80%" contenteditable>'.$row_subject["name"].'</td>';
+                    $output .= '</tr>';
+                }
+
+                $output .= '</table>';
+
             } else {
                 $sql = "SELECT name, surname FROM students WHERE group_id='$group'";
                 $result = $this->_db->query($sql);
 
+                $output .= '<table class="table table-bordered">';
+
                 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                     $output .= '<tr>';
                     $output .= '<td>'.$row['surname'].' '.$row['name'].'</td>';
+                    $output .= '<td align="center">+</td>';
                     $output .= '</tr>';
                 }
+
+                $output .= '</table>';
             }
 
-            $output .= '</table>';
             echo $output;
 
         } catch (PDOException $e) {
             echo 'Database error: ' . $e->getMessage();
         }
-
-
-        /*if(mysqli_num_rows($result) > 0)
-        {
-            while($row = mysqli_fetch_array($result))
-            {
-                $output .= '  
-                <tr>  
-                     <td>'.$row["id"].'</td>  
-                     <td class="first_name" data-id1="'.$row["id"].'" contenteditable>'.$row["first_name"].'</td>  
-                     <td class="last_name" data-id2="'.$row["id"].'" contenteditable>'.$row["last_name"].'</td>  
-                     <td><button type="button" name="delete_btn" data-id3="'.$row["id"].'" class="btn btn-xs btn-danger btn_delete">x</button></td>  
-                </tr>  
-           ';
-            }
-            $output .= '  
-           <tr>  
-                <td></td>  
-                <td id="first_name" contenteditable></td>  
-                <td id="last_name" contenteditable></td>  
-                <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+</button></td>  
-           </tr>  
-      ';
-        }
-        else
-        {
-
-        }*/
     }
 }
 ?>

@@ -11,6 +11,7 @@ $gfs = new GuestFindStudent();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/shadows.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style type="text/css">
         .selectorMargin {
@@ -19,7 +20,7 @@ $gfs = new GuestFindStudent();
         }
     </style>
 </head>
-<body>
+<body style="background-image: url('../images/background.jpg');">
 
 <!--MENU NAVBAR-->
 <div class="container">
@@ -49,7 +50,7 @@ $gfs = new GuestFindStudent();
 <!--MENU NAVBAR-->
 
 
-<div class="container">
+<div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
     <div>
         <form method="POST" class="form-inline">
             <div class="form-group">
@@ -69,6 +70,7 @@ $gfs = new GuestFindStudent();
         }
         ?>
     </div>
+</div>
 
     <?php
     if (isset($_POST['selectVal'])) {

@@ -15,9 +15,10 @@ if (isset($_GET['exit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/shadows.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
-<body>
+<body style="background-image: url('../images/background.jpg');">
 
 <!--MENU NAVBAR-->
 <div class="container">
@@ -42,10 +43,13 @@ if (isset($_GET['exit'])) {
                         <li><a href="results.php">Итоги</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <p class="navbar-text"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?></p>
-                        <?php if ($_SESSION['auth'] == 'student') {
-                            echo '<li><a href="?exit">Выход</a></li>';
-                        } ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <?php if ($_SESSION['auth'] == 'student') { echo '<li><a href="?exit">Выход <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>'; }  ?>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -55,7 +59,7 @@ if (isset($_GET['exit'])) {
 <!--//MENU NAVBAR-->
 
 
-<div class="container">
+<div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
 
     <div class="form-inline">
         <div class="form-group">

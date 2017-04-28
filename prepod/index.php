@@ -42,7 +42,7 @@ if (isset($_GET['exit'])) {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <span class="navbar-brand">Вы вошли как преподователь</span>
+                    <span class="navbar-brand">Вы вошли как преподаватель</span>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
