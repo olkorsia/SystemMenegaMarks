@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "../controller/GuestMainTable.php";
 
 if (isset($_GET['exit'])) {
     session_unset();
@@ -51,7 +52,7 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'student') {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <span class="navbar-brand">Вы вошли как гость</span>
+                    <span class="navbar-brand">Вы вошли как студент</span>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -80,62 +81,15 @@ if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'student') {
 <div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
     <div id="idMarks">
 
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tr>
-                    <td></td>
-                    <td>Тема 1</td>
-                    <td>Тема 2</td>
-                    <td>Тема 3</td>
-                    <td>Тема 4</td>
-                    <td>Тема 5</td>
-                    <td>Тема 6</td>
-                    <td>Тема 7</td>
-                    <td>Тема 8</td>
-                    <td>Тема 9</td>
-                    <td>Тема 10</td>
-                </tr>
-                <tr>
-                    <td>ИЗВП</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>ОПИ</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>ПП</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>5</td>
-                </tr>
-            </table>
-        </div>
+        <?php
+            if (isset($_SESSION["auth"]) && $_SESSION["auth"] === "student") {
+                $student_id = $_SESSION["id"];
+                $gmt = new GuestMainTable();
+
+                $gmt->getMainTable($student_id);
+            }
+        ?>
+
     </div>
 
 </div>

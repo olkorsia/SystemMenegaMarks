@@ -2,8 +2,8 @@
 session_start();
 require_once "../controller/PrepodPredmet.php";
 require_once "../controller/PrepodSemestr.php";
-//require "../controller/PrepodGroup.php";
-//require "../controller/PrepodTable.php";
+require_once "../controller/PrepodGroup.php";
+require_once "../controller/PrepodTable.php";
 
 $pred = new PrepodPredmet();
 

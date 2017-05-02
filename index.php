@@ -63,8 +63,7 @@ if ($_SESSION['auth'] == 'prepod') {
 												<input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-login" value="Войти">
 											</div>
 											<div class="col-sm-5">
-												
-												<a href="guest/search_student.php" class="form-control btn btn-login">Войти как гость</a>
+												<a href="guest/search_student.php" class="form-control btn btn-login">Войти как студент</a>
 											</div>
 										</div>
 									</div>

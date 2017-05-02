@@ -33,7 +33,7 @@ if (isset($_GET['exit'])) {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <span class="navbar-brand">Вы вошли как гость</span>
+                    <span class="navbar-brand">Вы вошли как студент</span>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -82,29 +82,43 @@ if (isset($_GET['exit'])) {
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
-                <td></td>
                 <td>Тема 1</td>
-                <td>Тема 2</td>
-                <td>Тема 3</td>
-                <td>Тема 4</td>
-                <td>Тема 5</td>
-                <td>Тема 6</td>
-                <td>Тема 7</td>
-                <td>Тема 8</td>
-                <td>Тема 9</td>
-                <td>Тема 10</td>
+                <td>5</td>
             </tr>
             <tr>
-                <td>ИЗВП</td>
+                <td>Тема 2</td>
                 <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 3</td>
                 <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 4</td>
                 <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 5</td>
                 <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 6</td>
                 <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 7</td>
                 <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 8</td>
                 <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 9</td>
                 <td>5</td>
-                <td>5</td>
+            </tr>
+            <tr>
+                <td>Тема 10</td>
                 <td>5</td>
             </tr>
         </table>
