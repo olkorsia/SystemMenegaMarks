@@ -31,13 +31,21 @@ class PrepodPredmet
         $result = $this->_db->query($sql);
 
         echo <<<HTML
-        <form method="POST" class="form-inline">
-            <div class="form-group">
-                <p class="form-control-static">Добавить из списка новый предмет: </p>
-            </div>
-            <div class="form-group">
-                <select class="form-control" name="select_add_predmet">
+        
+        <!-- Modal Predmet -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Добавить предмет</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="forSelectPredmet">Выбрать из существующих предметов</label>
+                                <select multiple class="form-control" id="forSelectPredmet">
 HTML;
+
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch()) {
                 echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
@@ -45,23 +53,23 @@ HTML;
         } else {
             echo '<option>Нет добавленых предметов</option>';
         }
-        echo <<<HTML
-                </select>
-            </div>
-            <button type="submit" class="btn btn-default" name="submit_select_add_predmet">Добавить</button>
-        </form>
-        <br />
-        <form method="POST" class="form-inline">
-            <div class="form-group">
-                <p class="form-control-static">Добавить новый предмет: </p>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" name="input_add_predmet">
-            </div>
-            <button type="submit" name="submit_input_add_predmet" class="btn btn-default">Добавить</button>
-        </form>
-HTML;
 
+        echo <<<HTML
+                                   
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="forInputPredmet">Добавить новый предмет</label>
+                                <input type="text" id="forInputPredmet" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Добавить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+HTML;
     }
 
     public function addPredmetSelector()

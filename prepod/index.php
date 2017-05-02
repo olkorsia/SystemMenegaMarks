@@ -5,7 +5,9 @@ require_once "../controller/PrepodSemestr.php";
 require_once "../controller/PrepodGroup.php";
 require_once "../controller/PrepodTable.php";
 
-$pred = new PrepodPredmet();
+$cpred = new PrepodPredmet();
+$csemestr = new PrepodSemestr();
+$cgroup = new PrepodGroup();
 
 if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'prepod') {
     header("Location: /");
@@ -80,42 +82,15 @@ if (isset($_GET['exit'])) {
                 Добавить новый
             </button>
 
-            <!-- Modal Predmet -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Добавить предмет</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="forSelectPredmet">Выбрать из существующих предметов</label>
-                                <select multiple class="form-control" id="forSelectPredmet">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="forInputPredmet">Добавить новый предмет</label>
-                                <input type="text" id="forInputPredmet" class="form-control">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Добавить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+                $cpred->elementAddPredmet();
+            ?>
 
         </div>
         <div class="form-group">
             <select multiple class="form-control" id="listPredmet">
                 <?php
-                $pred->outputAllPredmetPrepod();
+                $cpred->outputAllPredmetPrepod();
                 ?>
             </select>
         </div>
@@ -132,37 +107,9 @@ if (isset($_GET['exit'])) {
                     Добавить новый
                 </button>
 
-                <!-- Modal Semestr-->
-                <div class="modal fade" id="myModalSemestr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Добавить семестр</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="forSelectPredmet">Выберите предмет</label>
-                                    <select multiple class="form-control" id="forSelectPredmet" required>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
-                                <div class="row"><hr/></div>
-                                <div class="form-group">
-                                    <label for="forInputPredmet">Добавить новый семестр</label>
-                                    <input type="text" id="forInputPredmet" class="form-control">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Добавить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    $csemestr->elementAddSemestr();
+                ?>
 
             </div>
             <div class="form-group" id="divListSemestr">
@@ -184,59 +131,9 @@ if (isset($_GET['exit'])) {
                     Добавить новый
                 </button>
 
-                <!-- Modal Semestr-->
-                <div class="modal fade" id="myModalGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Добавить группу</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="forSelectPredmet">Выберите предмет</label>
-                                    <select multiple class="form-control" id="forSelectPredmet">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="forSelectPredmet">Выберите семестр</label>
-                                    <select multiple class="form-control" id="forSelectPredmet">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
-
-                                <div class="row"><hr/></div>
-
-                                <div class="form-group">
-                                    <label for="forSelectPredmet">Выбрать из существующих групп</label>
-                                    <select multiple class="form-control" id="forSelectPredmet">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="forInputPredmet">Добавить новую группу</label>
-                                    <input type="text" id="forInputPredmet" class="form-control">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Добавить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    $cgroup->elementAddGroup();
+                ?>
 
             </div>
             <div class="form-group">
@@ -297,6 +194,20 @@ if (isset($_GET['exit'])) {
             $("#mainPrepodTable").html(data);
         });
     });
+
+    $("#forSelectPredmet").change(function () {
+        alert("hi");
+        var idPredmetAdd = $("#forSelectPredmet option:selected").val();
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_semestr.php",
+            data: ({id_predmet: idPredmetAdd})
+        }).done(function (data) {
+            $("#forSelectPredmet").html(data);
+        });
+    });
+
 </script>
 <script src="../js/bootstrap.min.js"></script>
 </body>

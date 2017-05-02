@@ -32,14 +32,19 @@ class PrepodSemestr
         $result = $this->_db->query($sql);
 
         echo <<<HTML
-        <form method="POST">
-        <div class="col-md-4">
-        
-        <div class="form-group">
-            <label class="control-label">Выберите предмет:</label>
-        </div>
-        <div class="form-group">
-            <select multiple class="form-control" id="listAddPredmet" required>
+
+        <!-- Modal Semestr-->
+                <div class="modal fade" id="myModalSemestr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Добавить семестр</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="forSelectPredmet">Выберите предмет</label>
+                                    <select multiple class="form-control" id="forSelectPredmet" required>
 HTML;
 
         if ($result->rowCount() > 0) {
@@ -51,20 +56,21 @@ HTML;
         }
 
         echo <<<HTML
-            </select>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="form-group">
-            <label class="control-label">Введите номер семестра:</label>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Номер семестра" required>
-        </div>
-        <button type="submit" class="btn btn-default">Добавить</button>
-        
-    </div>
-    </form>
+                                    </select>
+                                </div>
+                                <div class="row"><hr/></div>
+                                <div class="form-group">
+                                    <label for="forInputPredmet">Добавить новый семестр</label>
+                                    <input type="text" id="forInputPredmet" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Добавить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 HTML;
     }
 }
