@@ -48,7 +48,7 @@ if (isset($_GET['exit'])) {
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.php">Главная</a></li>
-                        <li><a href="add.php">Добавить</a></li>
+                        <!--li><a href="add.php">Добавить</a></li-->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -74,6 +74,43 @@ if (isset($_GET['exit'])) {
     <div class="col-sm-4 col-md-4">
         <div class="form-group">
             <label class="control-label">Предмет:</label>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">
+                Добавить новый
+            </button>
+
+            <!-- Modal Predmet -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Добавить предмет</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="forSelectPredmet">Выбрать из существующих предметов</label>
+                                <select multiple class="form-control" id="forSelectPredmet">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="forInputPredmet">Добавить новый предмет</label>
+                                <input type="text" id="forInputPredmet" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Добавить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="form-group">
             <select multiple class="form-control" id="listPredmet">
@@ -89,6 +126,44 @@ if (isset($_GET['exit'])) {
         <div id="select_semestr">
             <div class="form-group">
                 <label class="control-label">Семестр:</label>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalSemestr">
+                    Добавить новый
+                </button>
+
+                <!-- Modal Semestr-->
+                <div class="modal fade" id="myModalSemestr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Добавить семестр</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="forSelectPredmet">Выберите предмет</label>
+                                    <select multiple class="form-control" id="forSelectPredmet" required>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <div class="row"><hr/></div>
+                                <div class="form-group">
+                                    <label for="forInputPredmet">Добавить новый семестр</label>
+                                    <input type="text" id="forInputPredmet" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Добавить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="form-group" id="divListSemestr">
                 <select multiple class="form-control" id="listSemestr">
@@ -103,6 +178,66 @@ if (isset($_GET['exit'])) {
         <div id="select_group">
             <div class="form-group">
                 <label class="control-label">Группа:</label>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalGroup">
+                    Добавить новый
+                </button>
+
+                <!-- Modal Semestr-->
+                <div class="modal fade" id="myModalGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Добавить группу</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="forSelectPredmet">Выберите предмет</label>
+                                    <select multiple class="form-control" id="forSelectPredmet">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="forSelectPredmet">Выберите семестр</label>
+                                    <select multiple class="form-control" id="forSelectPredmet">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+
+                                <div class="row"><hr/></div>
+
+                                <div class="form-group">
+                                    <label for="forSelectPredmet">Выбрать из существующих групп</label>
+                                    <select multiple class="form-control" id="forSelectPredmet">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="forInputPredmet">Добавить новую группу</label>
+                                    <input type="text" id="forInputPredmet" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Добавить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="form-group">
                 <select multiple class="form-control" id="listGroup">
