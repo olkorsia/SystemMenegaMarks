@@ -21,11 +21,12 @@ class PrepodGroup
         $result = $this->_db->query($sql);
 
         if ($result->rowCount() > 0) {
+            echo '<option selected disabled>Выберите группу</option>';
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
             }
         } else {
-            echo '<option>Нет групп</option>';
+            echo '<option selected disabled>Нет групп</option>';
         }
     }
 

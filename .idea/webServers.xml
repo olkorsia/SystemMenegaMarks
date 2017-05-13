@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="e3c08dd8-74b2-4725-9005-b7eef4489f58" name="alexandrkorsia.myjino.ru" url="http://alexandrkorsia.myjino.ru">
-        <fileTransfer host="alexandrkorsia.myjino.ru" port="21">
+        <fileTransfer host="alexandrkorsia.myjino.ru" port="21" rootFolder="/domains/alexandrkorsia.myjino.ru">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

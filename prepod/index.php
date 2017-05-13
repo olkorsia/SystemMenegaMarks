@@ -88,7 +88,8 @@ if (isset($_GET['exit'])) {
 
         </div>
         <div class="form-group">
-            <select multiple class="form-control" id="listPredmet">
+            <select class="form-control" id="listPredmet">
+                <option selected disabled>Выберите предмет</option>
                 <?php
                 $cpred->outputAllPredmetPrepod();
                 ?>
@@ -113,8 +114,8 @@ if (isset($_GET['exit'])) {
 
             </div>
             <div class="form-group" id="divListSemestr">
-                <select multiple class="form-control" id="listSemestr">
-                    <option>Нет данных</option>
+                <select class="form-control" id="listSemestr">
+                    <option selected disabled>Нет данных</option>
                 </select>
             </div>
         </div>
@@ -137,8 +138,8 @@ if (isset($_GET['exit'])) {
 
             </div>
             <div class="form-group">
-                <select multiple class="form-control" id="listGroup">
-                    <option>Нет данных</option>
+                <select class="form-control" id="listGroup">
+                    <option selected disabled>Нет данных</option>
                 </select>
             </div>
         </div>

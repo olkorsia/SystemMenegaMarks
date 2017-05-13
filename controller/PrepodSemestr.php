@@ -19,11 +19,12 @@ class PrepodSemestr
         $result = $this->_db->query($sql);
 
         if ($result->rowCount() > 0) {
+            echo '<option selected disabled>Выберите семестр</option>';
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo '<option value="' . $row['semestr'] . '">' . $row['semestr'] . '</option>';
             }
         } else {
-            echo '<option>Нет добавленых семестров</option>';
+            echo '<option selected disabled>Нет добавленых семестров</option>';
         }
     }
 
