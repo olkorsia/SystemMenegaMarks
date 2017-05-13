@@ -1,13 +1,16 @@
 <?php
+session_start();
 require_once "ConnectDB.php";
 
 class PrepodPredmet
 {
     private $_db = null;
+    private $prepod_id;
 
     public function __construct()
     {
         $this->_db = connectDB::getInstance();
+        $this->prepod_id = $_SESSION['prepod_id'];
     }
 
     public function outputAllPredmetPrepod()
@@ -33,7 +36,7 @@ class PrepodPredmet
         echo <<<HTML
         
         <!-- Modal Predmet -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal fade" id="buttonAddPredmet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -41,9 +44,10 @@ class PrepodPredmet
                             <h4 class="modal-title" id="myModalLabel">Добавить предмет</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="forSelectPredmet">Выбрать из существующих предметов</label>
-                                <select multiple class="form-control" id="forSelectPredmet">
+                            <form method="POST">
+                                <div class="form-group">
+                                    <label for="forSelectPredmet">Выбрать из существующих предметов</label>
+                                    <select multiple class="form-control" id="selectorOfExistingPredmet" name="selectorOfExistingPredmet">
 HTML;
 
         if ($result->rowCount() > 0) {
@@ -56,15 +60,25 @@ HTML;
 
         echo <<<HTML
                                    
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="forInputPredmet">Добавить новый предмет</label>
-                                <input type="text" id="forInputPredmet" class="form-control">
-                            </div>
+                                    </select>
+                                </div>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-default btn-sm">Добавить предмет</button>
+                                </div>
+                            </form>
+                            <hr/>
+                            <form method="POST">                   
+                                <div class="form-group">
+                                    <label for="forInputPredmet">Добавить новый предмет</label>
+                                    <input type="text" id="inputNewPredmet" class="form-control" name="inputNewPredmet">
+                                </div>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-default btn-sm">Добавить новый предмет</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Добавить</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Ок</button>
                         </div>
                     </div>
                 </div>
@@ -72,12 +86,26 @@ HTML;
 HTML;
     }
 
-    public function addPredmetSelector()
+    public function addPredmetOfSelector($predmet_id)
     {
+        $sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id'";
+        $result = $this->_db->query($sql);
 
+        if ($result->rowCount() == 0 && $result == true) {
+            $sql = "INSERT INTO main (prepod_id, predmet_id) VALUES ('$this->prepod_id', '$predmet_id')";
+            $result = $this->_db->query($sql);
+
+            if ($result == true) {
+                echo "Predmet added";
+            } else {
+                echo "Predmeta nety y dannogo prepodovatelya i on ne dobavilsya";
+            }
+        } else {
+            echo "Takoy predmet y dannogo prepodovatelya esty";
+        }
     }
 
-    public function addPredmetInputText($name_new_predmet)
+    public function addPredmetOfInputText($name_new_predmet) /////////////////////////////////////////////Доработать !!!!!!!!!!!!!!!!!!!
     {
         $sql = "SELECT name FROM predmet WHERE '$name_new_predmet' LIKE name";
         $result = $this->_db->query($sql);

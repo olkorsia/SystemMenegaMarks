@@ -34,7 +34,7 @@ class PrepodGroup
 
         echo <<<HTML
             <!-- Modal Semestr-->
-                <div class="modal fade" id="myModalGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="buttonAddGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">

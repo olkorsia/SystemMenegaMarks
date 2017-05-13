@@ -78,7 +78,7 @@ if (isset($_GET['exit'])) {
             <label class="control-label">Предмет:</label>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#buttonAddPredmet">
                 Добавить новый
             </button>
 
@@ -88,7 +88,7 @@ if (isset($_GET['exit'])) {
 
         </div>
         <div class="form-group">
-            <select class="form-control" id="listPredmet">
+            <select class="form-control" id="selectorPredmets">
                 <option selected disabled>Выберите предмет</option>
                 <?php
                 $cpred->outputAllPredmetPrepod();
@@ -104,7 +104,7 @@ if (isset($_GET['exit'])) {
                 <label class="control-label">Семестр:</label>
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalSemestr">
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#buttonAddSemestr">
                     Добавить новый
                 </button>
 
@@ -113,8 +113,8 @@ if (isset($_GET['exit'])) {
                 ?>
 
             </div>
-            <div class="form-group" id="divListSemestr">
-                <select class="form-control" id="listSemestr">
+            <div class="form-group">
+                <select class="form-control" id="selectorSemestrs">
                     <option selected disabled>Нет данных</option>
                 </select>
             </div>
@@ -128,7 +128,7 @@ if (isset($_GET['exit'])) {
                 <label class="control-label">Группа:</label>
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalGroup">
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#buttonAddGroup">
                     Добавить новый
                 </button>
 
@@ -138,7 +138,7 @@ if (isset($_GET['exit'])) {
 
             </div>
             <div class="form-group">
-                <select class="form-control" id="listGroup">
+                <select class="form-control" id="selectorGroups">
                     <option selected disabled>Нет данных</option>
                 </select>
             </div>
@@ -156,36 +156,45 @@ if (isset($_GET['exit'])) {
 
 </div>
 
+<?php
+    if (isset($_POST["selectorOfExistingPredmet"])) {
+        $cpred->addPredmetOfSelector($_POST["selectorOfExistingPredmet"]);
+    }
+    if (isset($_POST["inputNewPredmet"])) {
+        //$cpred->addPredmetOfInputText($_POST["inputNewPredmet"]);
+    }
+?>
+
 <!--script src="../js/prepod_ajax.js"></script-->
 <script type="text/javascript">
     var idPredmet, semestr, group;
 
-    $("#listPredmet").change(function () {
-        idPredmet = $("#listPredmet option:selected").val();
+    $("#selectorPredmets").change(function () {
+        idPredmet = $("#selectorPredmets option:selected").val();
         $.ajax({
             type: "POST",
             async: false,
             url: "../ajax/ajax_semestr.php",
             data: ({id_predmet: idPredmet})
         }).done(function (data) {
-            $("#listSemestr").html(data);
+            $("#selectorSemestrs").html(data);
         });
     });
 
-    $("#listSemestr").change(function () {
-        semestr = $("#listSemestr option:selected").val();
+    $("#selectorSemestrs").change(function () {
+        semestr = $("#selectorSemestrs option:selected").val();
         $.ajax({
             type: "POST",
             async: false,
             url: "../ajax/ajax_group.php",
             data: ({id_predmet: idPredmet, semestr: semestr})
         }).done(function (data) {
-            $("#listGroup").html(data);
+            $("#selectorGroups").html(data);
         });
     });
 
-    $("#listGroup").change(function () {
-        group = $("#listGroup option:selected").val();
+    $("#selectorGroups").change(function () {
+        group = $("#selectorGroups option:selected").val();
         $.ajax({
             type: "POST",
             async: false,
