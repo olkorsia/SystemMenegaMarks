@@ -146,7 +146,7 @@ if (isset($_GET['exit'])) {
     </div>
 
     <div class="col-sm-12 col-md-12">
-        <div class="table-responsive" id="mainPrepodTable">
+        <div id="mainPrepodTable">
 
         </div>
     </div>
