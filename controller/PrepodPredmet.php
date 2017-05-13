@@ -29,7 +29,7 @@ class PrepodPredmet
         }
     }
 
-    public function elementAddPredmet() {
+    public function modalWindowAddPredmet() {
         $sql = "SELECT id, name FROM predmet";
         $result = $this->_db->query($sql);
 

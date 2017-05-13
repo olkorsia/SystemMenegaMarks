@@ -83,7 +83,7 @@ if (isset($_GET['exit'])) {
             </button>
 
             <?php
-                $cpred->elementAddPredmet();
+                $cpred->modalWindowAddPredmet();
             ?>
 
         </div>
