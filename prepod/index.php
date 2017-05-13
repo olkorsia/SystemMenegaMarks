@@ -161,7 +161,7 @@ if (isset($_GET['exit'])) {
         $cpred->addPredmetOfSelector($_POST["selectorOfExistingPredmet"]);
     }
     if (isset($_POST["inputNewPredmet"])) {
-        //$cpred->addPredmetOfInputText($_POST["inputNewPredmet"]);
+        $cpred->addPredmetOfInputText($_POST["inputNewPredmet"]);
     }
 ?>
 
