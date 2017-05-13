@@ -47,7 +47,7 @@ class PrepodPredmet
                             <form method="POST">
                                 <div class="form-group">
                                     <label for="forSelectPredmet">Выбрать из существующих предметов</label>
-                                    <select multiple class="form-control" id="selectorOfExistingPredmet" name="selectorOfExistingPredmet">
+                                    <select multiple class="form-control" id="selectorOfExistingPredmet" name="selectorOfExistingPredmet" required>
 HTML;
 
         if ($result->rowCount() > 0) {
@@ -70,7 +70,7 @@ HTML;
                             <form method="POST">                   
                                 <div class="form-group">
                                     <label for="forInputPredmet">Добавить новый предмет</label>
-                                    <input type="text" id="inputNewPredmet" class="form-control" name="inputNewPredmet">
+                                    <input type="text" id="inputNewPredmet" class="form-control" name="inputNewPredmet" required>
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-default btn-sm">Добавить новый предмет</button>

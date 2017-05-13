@@ -30,7 +30,7 @@ class PrepodGroup
         }
     }
 
-    public function elementAddGroup() {
+    public function modalWindowAddGroup() {
 
         echo <<<HTML
             <!-- Modal Semestr-->
@@ -43,8 +43,8 @@ class PrepodGroup
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="forSelectPredmet">Выберите предмет</label>
-                                    <select multiple class="form-control" id="forSelectPredmet">
+                                    <label for="selectorPredmetForAddGroup">Выберите предмет</label>
+                                    <select multiple class="form-control" id="selectorPredmetForAddGroup" name="selectorPredmetForAddGroup">
                                     
 HTML;
 
@@ -63,21 +63,17 @@ HTML;
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="forSelectPredmet">Выберите семестр</label>
-                                    <select multiple class="form-control" id="forSelectPredmet">
-HTML;
-
-
-
-        echo <<<HTML
+                                    <label for="selectorSemestrForAddGroup">Выберите семестр</label>
+                                    <select multiple class="form-control" id="selectorSemestrForAddGroup" name="selectorSemestrForAddGroup">
+                                        <option disabled>Выберите предмет</option>
                                     </select>
                                 </div>
 
                                 <div class="row"><hr/></div>
 
                                 <div class="form-group">
-                                    <label for="forSelectPredmet">Выбрать из существующих групп</label>
-                                    <select multiple class="form-control" id="forSelectPredmet">
+                                    <label for="selectorOfExistingGroup">Выбрать из существующих групп</label>
+                                    <select multiple class="form-control" id="selectorOfExistingGroup" name="selectorOfExistingGroup">
                                         <option>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -86,8 +82,8 @@ HTML;
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="forInputPredmet">Добавить новую группу</label>
-                                    <input type="text" id="forInputPredmet" class="form-control">
+                                    <label for="inputNewGroup">Добавить новую группу</label>
+                                    <input type="text" class="form-control" id="inputNewGroup" name="inputNewGroup">
                                 </div>
                             </div>
                             <div class="modal-footer">

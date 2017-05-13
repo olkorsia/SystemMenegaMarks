@@ -109,7 +109,7 @@ if (isset($_GET['exit'])) {
                 </button>
 
                 <?php
-                    $csemestr->elementAddSemestr();
+                    $csemestr->modalWindowAddSemestr();
                 ?>
 
             </div>
@@ -133,7 +133,7 @@ if (isset($_GET['exit'])) {
                 </button>
 
                 <?php
-                    $cgroup->elementAddGroup();
+                    $cgroup->modalWindowAddGroup();
                 ?>
 
             </div>
@@ -162,6 +162,9 @@ if (isset($_GET['exit'])) {
     }
     if (isset($_POST["inputNewPredmet"])) {
         $cpred->addPredmetOfInputText($_POST["inputNewPredmet"]);
+    }
+    if (isset($_POST["inputNewSemestr"])) {
+        $csemestr->addSemestrOfInputText($_POST["selectorPredmetForAddSemestr"], $_POST["inputNewSemestr"]);
     }
 ?>
 
@@ -205,16 +208,15 @@ if (isset($_GET['exit'])) {
         });
     });
 
-    $("#forSelectPredmet").change(function () {
-        alert("hi");
-        var idPredmetAdd = $("#forSelectPredmet option:selected").val();
+    $("#selectorPredmetForAddGroup").change(function () {
+        var idPredmetAdd = $("#selectorPredmetForAddGroup option:selected").val();
         $.ajax({
             type: "POST",
             async: false,
-            url: "../ajax/ajax_semestr.php",
+            url: "../ajax/ajax_semestr_for_modal.php",
             data: ({id_predmet: idPredmetAdd})
         }).done(function (data) {
-            $("#forSelectPredmet").html(data);
+            $("#selectorSemestrForAddGroup").html(data);
         });
     });
 
