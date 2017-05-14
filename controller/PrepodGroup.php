@@ -44,7 +44,7 @@ class PrepodGroup
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="selectorPredmetForAddGroup">Выберите предмет</label>
-                                    <select multiple class="form-control" id="selectorPredmetForAddGroup" name="selectorPredmetForAddGroup">
+                                    <select multiple class="form-control" id="selectorPredmetForAddGroup" name="selectorPredmetForAddGroup" required>
                                     
 HTML;
 
@@ -64,7 +64,7 @@ HTML;
                                 </div>
                                 <div class="form-group">
                                     <label for="selectorSemestrForAddGroup">Выберите семестр</label>
-                                    <select multiple class="form-control" id="selectorSemestrForAddGroup" name="selectorSemestrForAddGroup">
+                                    <select multiple class="form-control" id="selectorSemestrForAddGroup" name="selectorSemestrForAddGroup" required>
                                         <option disabled>Выберите предмет</option>
                                     </select>
                                 </div>
@@ -74,11 +74,20 @@ HTML;
                                 <div class="form-group">
                                     <label for="selectorOfExistingGroup">Выбрать из существующих групп</label>
                                     <select multiple class="form-control" id="selectorOfExistingGroup" name="selectorOfExistingGroup">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+HTML;
+
+        $sql = "SELECT id, name FROM groups";
+        $result = $this->_db->query($sql);
+
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                echo '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+            }
+        } else {
+            echo '<option>Нет добавленых предметов</option>';
+        }
+
+        echo <<<HTML
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -93,6 +102,38 @@ HTML;
                     </div>
                 </div>
 HTML;
+    }
+
+    public function addGroupOfInputText($predmet_id, $semestr, $group_id)
+    {
+        $sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr' AND group_id='$group_id'";
+        $result = $this->_db->query($sql);
+
+        if ($result->rowCount() == 0 && $result == true) {
+            $sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr' AND group_id='0'";
+            $result = $this->_db->query($sql);
+
+            if ($result->rowCount() == 1 && $result == true) {
+                $sql = "UPDATE main SET main.group='$group_id' WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr'";
+                $result = $this->_db->query($sql);
+
+                if ($result == true) {
+                    echo '<script type="text/javascript">alert("Группа успешно добавлен");</script>';
+                    header("Location: /prepod/");
+                }
+            } else {
+                $sql = "INSERT INTO main (prepod_id, predmet_id, semestr, group_id) VALUES ('$this->prepod_id', '$predmet_id', '$semestr', '$group_id')";
+                $result = $this->_db->query($sql);
+
+                if ($result == true) {
+                    echo '<script type="text/javascript">alert("Группа успешно добавлен");</script>';
+                    header("Location: /prepod/");
+                }
+            }
+        } else {
+            echo '<script type="text/javascript">alert("Группа существует в БД");</script>';
+        }
+
     }
 }
 

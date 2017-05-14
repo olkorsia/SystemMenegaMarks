@@ -96,15 +96,28 @@ HTML;
         $result = $this->_db->query($sql);
 
         if ($result->rowCount() == 0 && $result == true) {
-            $sql = "UPDATE main SET main.semestr='$semestr' WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id'";
+            $sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='0'";
             $result = $this->_db->query($sql);
 
-            if ($result == true) {
-                echo '<script type="text/javascript">alert("Предмет успешно добавлен");</script>';
+            if ($result->rowCount() == 1 && $result == true) {
+                $sql = "UPDATE main SET main.semestr='$semestr' WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id'";
+                $result = $this->_db->query($sql);
+
+                if ($result == true) {
+                    echo '<script type="text/javascript">alert("Семестр успешно добавлен");</script>';
+                    header("Location: /prepod/");
+                }
+            } else {
+                $sql = "INSERT INTO main (prepod_id, predmet_id, semestr) VALUES ('$this->prepod_id', '$predmet_id', '$semestr')";
+                $result = $this->_db->query($sql);
+
+                if ($result == true) {
+                    echo '<script type="text/javascript">alert("Семестр успешно добавлен");</script>';
+                    header("Location: /prepod/");
+                }
             }
-            header("Location: /prepod/");
         } else {
-            echo '<script type="text/javascript">alert("Предмет существует в БД");</script>';
+            echo '<script type="text/javascript">alert("Семестр существует в БД");</script>';
         }
 
     }

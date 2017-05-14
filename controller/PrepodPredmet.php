@@ -34,7 +34,6 @@ class PrepodPredmet
         $result = $this->_db->query($sql);
 
         echo <<<HTML
-        
         <!-- Modal Predmet -->
             <div class="modal fade" id="buttonAddPredmet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -66,7 +65,7 @@ HTML;
                                     <button type="submit" class="btn btn-default btn-sm">Добавить предмет</button>
                                 </div>
                             </form>
-                            <hr/>
+                            <div class="row"><hr/></div>
                             <form method="POST">                   
                                 <div class="form-group">
                                     <label for="forInputPredmet">Добавить новый предмет</label>
