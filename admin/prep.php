@@ -1,9 +1,13 @@
 <?php
 session_start();
+require_once "../controller/AdminPrep.php";
 
 if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'admin') {
     header("Location: /");
 }
+
+$caprep = new AdminPrep();
+
 if (isset($_GET['exit'])) {
     session_unset();
     session_destroy();
@@ -49,7 +53,7 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Admin<?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?> <span class="caret"></span></a>
+                               aria-expanded="false"><?php echo $_SESSION['name']; ?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="settings.php">Настройки</a></li>
                                 <li role="separator" class="divider"></li>
@@ -66,11 +70,111 @@ if (isset($_GET['exit'])) {
 
 <div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
 
+    <div style="margin-top: 30px;">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td width="20%"><b>Фамилия</b></td>
+                    <td width="20%"><b>Имя</b></td>
+                    <td width="20%"><b>Отчество</b></td>
+                    <td width="20%"><b>Логин</b></td>
+                    <td width="15%"><b>Куратор группы</b></td>
+                    <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
+                </tr>
+                </thead>
+                <tbody id="dataTablePrep">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 
 <div class="container" style="margin-bottom: 40px">
 
 </div>
+
+<script type="text/javascript">
+    function fetch_data() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_admin_prep_output.php"
+        }).done(function (data) {
+            $("#dataTablePrep").html(data);
+        });
+    }
+
+    function edit_data(id, text, column_name) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_admin_prep_edit.php",
+            data: ({id:id, text:text, column_name:column_name}),
+            dataType: "text"
+        }).done(function (data) {
+            alert(data);
+        });
+    }
+
+    function delete_data(id) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url:"../ajax/ajax_admin_prep_del.php",
+            data: ({id:id}),
+            dataType: "text"
+        }).done(function (data) {
+            alert(data);
+            fetch_data();
+        });
+    }
+
+    fetch_data();
+
+    $(document).on('blur', '.surnamePrep', function(){
+        var id = $(this).data("idSurname");
+        var changeSurname = $(this).text();
+        edit_data(id, changeSurname, "surname");
+        fetch_data();
+    });
+    $(document).on('blur', '.namePrep', function(){
+        var id = $(this).data("idName");
+        var changeName = $(this).text();
+        edit_data(id, changeName, "name");
+        fetch_data();
+    });
+    $(document).on('blur', '.patronicPrep', function(){
+        var id = $(this).data("idPatronic");
+        var changePatronic = $(this).text();
+        edit_data(id, changePatronic, "patronic");
+        fetch_data();
+    });
+
+    $(document).on('blur', '.loginPrep', function(){
+        var id = $(this).data("idLogin");
+        var changeLogin = $(this).text();
+        edit_data(id, changeLogin, "prepod_login");
+        fetch_data();
+    });
+
+    $(document).on('blur', '.groupPrep', function(){
+        var id = $(this).data("idGroup");
+        var changeGroup = $(this).text();
+        //edit_data(id, changeGroup, "group");
+        fetch_data();
+    });
+
+    $(document).on('click', '.deletePrep', function(){
+        var id = $(this).data("idDel");
+        if(confirm("Вы уверены, что хотите удалить это?")) {
+            delete_data(id);
+        }
+    });
+
+</script>
 
 <script src="../js/bootstrap.min.js"></script>
 </body>

@@ -70,27 +70,24 @@ if (isset($_GET['exit'])) {
 
 <div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
 
-    <div style="margin-bottom: 30px;">
-        <form class="form-inline" method="POST">
-            <div class="form-group">
-                <input type="text" class="form-control" name="inputNewGroup" placeholder="Введите название группы" size="25" required>
-            </div>
-            <button type="submit" class="btn btn-default">Добавить в БД</button>
-        </form>
-    </div>
+    <div style="margin-top: 30px;">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td width="20%"><b>Фамилия</b></td>
+                    <td width="20%"><b>Имя</b></td>
+                    <td width="20%"><b>Отчество</b></td>
+                    <td width="20%"><b>Группа</b></td>
+                    <td width="15%"><b>Изменить группу</b></td>
+                    <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
+                </tr>
+                </thead>
+                <tbody id="dataTableStudent">
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <td width="90%"><b>Группа</b></td>
-                <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
-            </thead>
-            <tbody id="dataTableGroup">
-
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
@@ -104,18 +101,18 @@ if (isset($_GET['exit'])) {
         $.ajax({
             type: "POST",
             async: false,
-            url: "../ajax/ajax_admin_group_output.php"
+            url: "../ajax/ajax_admin_student_output.php"
         }).done(function (data) {
-            $("#dataTableGroup").html(data);
+            $("#dataTableStudent").html(data);
         });
     }
 
-    function edit_data(id, text) {
+    function edit_data(id, text, column_name) {
         $.ajax({
             type: "POST",
             async: false,
-            url: "../ajax/ajax_admin_group_edit.php",
-            data: ({id:id, text:text}),
+            url: "../ajax/ajax_admin_student_edit.php",
+            data: ({id:id, text:text, column_name:column_name}),
             dataType: "text"
         }).done(function (data) {
             alert(data);
@@ -126,7 +123,7 @@ if (isset($_GET['exit'])) {
         $.ajax({
             type: "POST",
             async: false,
-            url:"../ajax/ajax_admin_group_del.php",
+            url:"../ajax/ajax_admin_student_del.php",
             data: ({id:id}),
             dataType: "text"
         }).done(function (data) {
@@ -137,14 +134,33 @@ if (isset($_GET['exit'])) {
 
     fetch_data();
 
-    $(document).on('blur', '.nameGroup', function(){
-        var id = $(this).data("id");
-        var changePredmet = $(this).text();
-        edit_data(id, changePredmet);
+    $(document).on('blur', '.surnameStudent', function(){
+        var id = $(this).data("idSurname");
+        var changeSurname = $(this).text();
+        edit_data(id, changeSurname, "surname");
+        fetch_data();
+    });
+    $(document).on('blur', '.nameStudent', function(){
+        var id = $(this).data("idName");
+        var changeName = $(this).text();
+        edit_data(id, changeName, "name");
+        fetch_data();
+    });
+    $(document).on('blur', '.patronicStudent', function(){
+        var id = $(this).data("idPatronic");
+        var changePatronic = $(this).text();
+        edit_data(id, changePatronic, "patronic");
         fetch_data();
     });
 
-    $(document).on('click', '.deleteGroup', function(){
+    $(document).on('blur', '.groupStudent', function(){
+        var id = $(this).data("idGroup");
+        var changeGroup = $(this).text();
+        //edit_data(id, changeGroup, "group");
+        fetch_data();
+    });
+
+    $(document).on('click', '.deleteStudent', function(){
         var id = $(this).data("idDel");
         if(confirm("Вы уверены, что хотите удалить это?")) {
             delete_data(id);
@@ -152,13 +168,6 @@ if (isset($_GET['exit'])) {
     });
 
 </script>
-
-<?php
-if (isset($_POST["inputNewGroup"])) {
-    $cagroup->addNewGroupToDB($_POST["inputNewGroup"]);
-    echo '<script>fetch_data();</script>';
-}
-?>
 
 <script src="../js/bootstrap.min.js"></script>
 </body>
