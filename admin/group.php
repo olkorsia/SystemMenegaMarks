@@ -1,12 +1,12 @@
 <?php
 session_start();
-require_once "../controller/AdminPredmet.php";
+require_once "../controller/AdminGroup.php";
 
 if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'admin') {
     header("Location: /");
 }
 
-$capred = new AdminPredmet();
+$cagroup = new AdminGroup();
 
 if (isset($_GET['exit'])) {
     session_unset();
@@ -83,7 +83,7 @@ if (isset($_GET['exit'])) {
         <table class="table table-striped">
             <thead>
             <tr>
-                <td width="90%"><b>Название предмета</b></td>
+                <td width="90%"><b>Группа</b></td>
                 <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
             </thead>
@@ -106,7 +106,7 @@ if (isset($_GET['exit'])) {
             async: false,
             url: "../ajax/ajax_admin_group_output.php"
         }).done(function (data) {
-            $("#dataTable").html(data);
+            $("#dataTableGroup").html(data);
         });
     }
 
@@ -155,7 +155,7 @@ if (isset($_GET['exit'])) {
 
 <?php
 if (isset($_POST["inputNewGroup"])) {
-    $capred->addNewPredmetToDB($_POST["inputNewGroup"]);
+    $cagroup->addNewGroupToDB($_POST["inputNewGroup"]);
     echo '<script>fetch_data();</script>';
 }
 ?>

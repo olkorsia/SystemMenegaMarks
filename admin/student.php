@@ -1,9 +1,13 @@
 <?php
 session_start();
+require_once "../controller/AdminStudent.php";
 
 if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'admin') {
     header("Location: /");
 }
+
+$castud = new AdminStudent();
+
 if (isset($_GET['exit'])) {
     session_unset();
     session_destroy();
@@ -49,7 +53,7 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Admin<?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?> <span class="caret"></span></a>
+                               aria-expanded="false"><?php echo $_SESSION['name']; ?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="settings.php">Настройки</a></li>
                                 <li role="separator" class="divider"></li>
@@ -66,11 +70,95 @@ if (isset($_GET['exit'])) {
 
 <div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
 
+    <div style="margin-bottom: 30px;">
+        <form class="form-inline" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="inputNewGroup" placeholder="Введите название группы" size="25" required>
+            </div>
+            <button type="submit" class="btn btn-default">Добавить в БД</button>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td width="90%"><b>Группа</b></td>
+                <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
+            </tr>
+            </thead>
+            <tbody id="dataTableGroup">
+
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <div class="container" style="margin-bottom: 40px">
 
 </div>
+
+<script type="text/javascript">
+    function fetch_data() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_admin_group_output.php"
+        }).done(function (data) {
+            $("#dataTableGroup").html(data);
+        });
+    }
+
+    function edit_data(id, text) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_admin_group_edit.php",
+            data: ({id:id, text:text}),
+            dataType: "text"
+        }).done(function (data) {
+            alert(data);
+        });
+    }
+
+    function delete_data(id) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url:"../ajax/ajax_admin_group_del.php",
+            data: ({id:id}),
+            dataType: "text"
+        }).done(function (data) {
+            alert(data);
+            fetch_data();
+        });
+    }
+
+    fetch_data();
+
+    $(document).on('blur', '.nameGroup', function(){
+        var id = $(this).data("id");
+        var changePredmet = $(this).text();
+        edit_data(id, changePredmet);
+        fetch_data();
+    });
+
+    $(document).on('click', '.deleteGroup', function(){
+        var id = $(this).data("idDel");
+        if(confirm("Вы уверены, что хотите удалить это?")) {
+            delete_data(id);
+        }
+    });
+
+</script>
+
+<?php
+if (isset($_POST["inputNewGroup"])) {
+    $cagroup->addNewGroupToDB($_POST["inputNewGroup"]);
+    echo '<script>fetch_data();</script>';
+}
+?>
 
 <script src="../js/bootstrap.min.js"></script>
 </body>
