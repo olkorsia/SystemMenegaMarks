@@ -28,6 +28,13 @@
                         $_SESSION['number_phone'] = $row['number_phone'];
                     }
                     header("Location: /prepod");
+                } elseif ($login === "admin") {
+                    if ($password === "padmin") {
+                        session_start();
+                        $_SESSION['auth'] = 'admin';
+                        $_SESSION['name'] = "Administrator";
+                        header("Location: /admin");
+                    }
                 } else {
                     echo '<div class="container"><div class="row"><div class="col-md-6 col-md-offset-3">
 		                    <div class="alert alert-danger" role="alert" style="text-align: center">Не удается войти. Проверьте правильность написания логина и пароля.</div>

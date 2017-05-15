@@ -99,7 +99,6 @@ HTML;
             } else {
                 echo "Predmeta nety y dannogo prepodovatelya i on ne dobavilsya";
             }
-            header("Location: /prepod/");
         } else {
             echo "Takoy predmet y dannogo prepodovatelya esty";
         }
@@ -107,24 +106,7 @@ HTML;
 
     public function addPredmetOfInputText($name_new_predmet)
     {
-        $trim_name = trim($name_new_predmet);
-        $sql = "SELECT name FROM predmet WHERE trim(name) LIKE '$trim_name'";
-        $result = $this->_db->query($sql);
 
-        if ($result->rowCount() == 0 && $result == true) {
-            $sql = "INSERT INTO predmet (name) VALUES ('$name_new_predmet')";
-            $result_add_predmet = $this->_db->query($sql);
-
-            $sql = "INSERT INTO main (prepod_id, predmet_id) VALUES ('$this->prepod_id', (SELECT id FROM predmet WHERE name LIKE '$name_new_predmet'))";
-            $result_add_main = $this->_db->query($sql);
-
-            if ($result_add_main == true) {
-                echo '<script type="text/javascript">alert("Предмет успешно добавлен");</script>';
-            }
-            header("Location: /prepod/");
-        } else {
-            echo '<script type="text/javascript">alert("Предмет существует в БД");</script>';
-        }
 
     }
 
