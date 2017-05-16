@@ -41,10 +41,11 @@ class PrepodGroup
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Добавить группу</h4>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="selectorPredmetForAddGroup">Выберите предмет</label>
-                                    <select multiple class="form-control" id="selectorPredmetForAddGroup" name="selectorPredmetForAddGroup" required>
+                            <form method="POST">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="selectorPredmetForAddGroup">Выберите предмет</label>
+                                        <select multiple class="form-control" id="selectorPredmetForAddGroup" name="selectorPredmetForAddGroup" required>
                                     
 HTML;
 
@@ -60,20 +61,20 @@ HTML;
         }
 
         echo <<<HTML
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="selectorSemestrForAddGroup">Выберите семестр</label>
-                                    <select multiple class="form-control" id="selectorSemestrForAddGroup" name="selectorSemestrForAddGroup" required>
-                                        <option disabled>Выберите предмет</option>
-                                    </select>
-                                </div>
-
-                                <div class="row"><hr/></div>
-
-                                <div class="form-group">
-                                    <label for="selectorOfExistingGroup">Выбрать из существующих групп</label>
-                                    <select multiple class="form-control" id="selectorOfExistingGroup" name="selectorOfExistingGroup">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="selectorSemestrForAddGroup">Выберите семестр</label>
+                                        <select multiple class="form-control" id="selectorSemestrForAddGroup" name="selectorSemestrForAddGroup" required>
+                                            <option disabled>Выберите предмет</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="row"><hr/></div>
+    
+                                    <div class="form-group">
+                                        <label for="selectorOfExistingGroup">Выбрать из существующих групп</label>
+                                        <select multiple class="form-control" id="selectorOfExistingGroup" name="selectorOfExistingGroup" required>
 HTML;
 
         $sql = "SELECT id, name FROM groups";
@@ -88,52 +89,48 @@ HTML;
         }
 
         echo <<<HTML
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputNewGroup">Добавить новую группу</label>
-                                    <input type="text" class="form-control" id="inputNewGroup" name="inputNewGroup">
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Добавить</button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 HTML;
     }
 
-    public function addGroupOfInputText($predmet_id, $semestr, $group_id)
+    public function addGroupOfSelector($predmet_id, $semestr, $group_id)
     {
-        $sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr' AND group_id='$group_id'";
-        $result = $this->_db->query($sql);
+        $main_sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr' AND group_id='$group_id'";
+        $main_result = $this->_db->query($main_sql);
 
-        if ($result->rowCount() == 0 && $result == true) {
-            $sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr' AND group_id='0'";
-            $result = $this->_db->query($sql);
 
-            if ($result->rowCount() == 1 && $result == true) {
-                $sql = "UPDATE main SET main.group='$group_id' WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr'";
-                $result = $this->_db->query($sql);
+        if ($main_result->rowCount() == 0 && $main_result == true) {
+            $zero_sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr' AND group_id='0'";
+            $zero_result = $this->_db->query($zero_sql);
 
-                if ($result == true) {
+            echo $zero_result->rowCount();
+            if ($zero_result->rowCount() == 1 && $zero_result == true) {
+                $update_sql = "UPDATE main SET group_id='$group_id' WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr'";
+                $update_result = $this->_db->query($update_sql);
+
+                if ($update_result == true) {
                     echo '<script type="text/javascript">alert("Группа успешно добавлен");</script>';
-                    header("Location: /prepod/");
                 }
             } else {
-                $sql = "INSERT INTO main (prepod_id, predmet_id, semestr, group_id) VALUES ('$this->prepod_id', '$predmet_id', '$semestr', '$group_id')";
-                $result = $this->_db->query($sql);
+                $insert_sql = "INSERT INTO main (prepod_id, predmet_id, semestr, group_id) VALUES ('$this->prepod_id', '$predmet_id', '$semestr', '$group_id')";
+                $insert_result = $this->_db->query($insert_sql);
 
-                if ($result == true) {
+                if ($insert_result == true) {
                     echo '<script type="text/javascript">alert("Группа успешно добавлен");</script>';
-                    header("Location: /prepod/");
                 }
             }
         } else {
             echo '<script type="text/javascript">alert("Группа существует в БД");</script>';
         }
-
     }
 }
 

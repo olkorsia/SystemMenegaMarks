@@ -42,8 +42,8 @@ class PrepodPredmet
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">Добавить предмет</h4>
                         </div>
-                        <div class="modal-body">
-                            <form method="POST">
+                        <form method="POST">
+                            <div class="modal-body">                            
                                 <div class="form-group">
                                     <label for="forSelectPredmet">Выбрать из существующих предметов</label>
                                     <select multiple class="form-control" id="selectorOfExistingPredmet" name="selectorOfExistingPredmet" required>
@@ -60,25 +60,12 @@ HTML;
         echo <<<HTML
                                    
                                     </select>
-                                </div>
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-default btn-sm">Добавить предмет</button>
-                                </div>
-                            </form>
-                            <div class="row"><hr/></div>
-                            <form method="POST">                   
-                                <div class="form-group">
-                                    <label for="forInputPredmet">Добавить новый предмет</label>
-                                    <input type="text" id="inputNewPredmet" class="form-control" name="inputNewPredmet" required>
-                                </div>
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-default btn-sm">Добавить новый предмет</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Ок</button>
-                        </div>
+                                </div>                                                  
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Добавить предмет</button>
+                            </div>
+                        </form> 
                     </div>
                 </div>
             </div>

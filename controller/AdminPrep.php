@@ -29,10 +29,28 @@ class AdminPrep
                 echo '<td width="20%" class="namePrep" data-id-name='.$row["id"].' contenteditable>'.$row["name"].'</td>';
                 echo '<td width="20%" class="patronicPrep" data-id-patronic='.$row["id"].' contenteditable>'.$row["patronic"].'</td>';
                 echo '<td width="20%" class="loginPrep" data-id-login='.$row["id"].' contenteditable>'.$row["login"].'</td>';
-                echo '<td width="15%" class="groupPrep" data-id-group='.$row["id"].' contenteditable>'.$group.'</td>';
+                echo '<td width="15%" class="groupPrep" data-id-group='.$row["id"].' data-toggle="modal" data-target="#myModal">'.$group.'</td>';
                 echo '<td align="center" width="5%"><span class="glyphicon glyphicon-trash deleteStudent" data-id-del="'.$row["id"].'"></span></td>';
                 echo '</tr>';
             }
+            echo '<!-- Modal -->
+        <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>';
         }
     }
 

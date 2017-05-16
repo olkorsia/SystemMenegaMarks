@@ -31,7 +31,7 @@ $("#listGroup").change(function () {
     $.ajax({
         type: "POST",
         async: false,
-        url: "../ajax/ajax_mainTable.php",
+        url: "../ajax/ajax_mainMarksTable.php",
         data: ({main_id: mainId})
     }).done(function (data) {
         $("#mainPrepodTable").html(data);

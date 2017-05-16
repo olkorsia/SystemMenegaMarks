@@ -1,12 +1,9 @@
 <?php
 session_start();
-require_once "../controller/AdminPrep.php";
 
-if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'admin') {
+if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'prepod') {
     header("Location: /");
 }
-
-$caprep = new AdminPrep();
 
 if (isset($_GET['exit'])) {
     session_unset();
@@ -40,20 +37,22 @@ if (isset($_GET['exit'])) {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <span class="navbar-brand">Вы вошли как администратор</span>
+                    <span class="navbar-brand">Вы вошли как преподаватель</span>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.php">Предметы</a></li>
-                        <li><a href="group.php">Группы</a></li>
-                        <li><a href="student.php">Студенты</a></li>
-                        <li class="active"><a href="prep.php">Преподователи</a></li>
+                        <li><a href="index.php">Главная</a></li>
+                        <?php
+                        if ($_SESSION["prepod_group"] != 0) {
+                            echo '<li class="active"><a href="managegroupe.php">Управление группой</a></li>';
+                        }
+                        ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false"><?php echo $_SESSION['name']; ?> <span class="caret"></span></a>
+                               aria-expanded="false"><?php echo ' ' . $_SESSION['surname'] . ' ' . $_SESSION['name'] . ' ' . $_SESSION['patronic']; ?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="settings.php">Настройки</a></li>
                                 <li role="separator" class="divider"></li>
@@ -69,7 +68,7 @@ if (isset($_GET['exit'])) {
 <!--//MENU NAVBAR-->
 
 <div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
-
+    <p align="center">Ваша группа:  <?php echo $_SESSION["group_name"]; ?></p>
     <div style="margin-top: 30px;">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -78,51 +77,43 @@ if (isset($_GET['exit'])) {
                     <td width="20%"><b>Фамилия</b></td>
                     <td width="20%"><b>Имя</b></td>
                     <td width="20%"><b>Отчество</b></td>
-                    <td width="20%"><b>Логин</b></td>
-                    <td width="15%"><b>Куратор группы</b></td>
                     <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
                 </tr>
                 </thead>
-                <tbody id="dataTablePrep">
+                <tbody id="dataTableStudentPrepod">
 
                 </tbody>
             </table>
         </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-
 </div>
 
 <div class="container" style="margin-bottom: 40px">
 
 </div>
 
+
 <script type="text/javascript">
     function fetch_data() {
         $.ajax({
             type: "POST",
             async: false,
-            url: "../ajax/ajax_admin_prep_output.php"
+            url: "../ajax/ajax_prep_student_output.php"
         }).done(function (data) {
-            $("#dataTablePrep").html(data);
+            $("#dataTableStudentPrepod").html(data);
+        });
+    }
+
+    function add_data(surnameStudent, nameStudent, patronicStudent) {
+        $.ajax({
+            url:"../ajax/ajax_prep_student_add.php",
+            type:"POST",
+            async: false,
+            data: ({surname_student:surnameStudent, name_student:nameStudent, patronic_student:patronicStudent}),
+            dataType:"text"
+        }).done(function (data) {
+            alert(data);
+            fetch_data();
         });
     }
 
@@ -130,7 +121,7 @@ if (isset($_GET['exit'])) {
         $.ajax({
             type: "POST",
             async: false,
-            url: "../ajax/ajax_admin_prep_edit.php",
+            url: "../ajax/ajax_prep_student_edit.php",
             data: ({id:id, text:text, column_name:column_name}),
             dataType: "text"
         }).done(function (data) {
@@ -142,7 +133,7 @@ if (isset($_GET['exit'])) {
         $.ajax({
             type: "POST",
             async: false,
-            url:"../ajax/ajax_admin_prep_del.php",
+            url:"../ajax/ajax_prep_student_del.php",
             data: ({id:id}),
             dataType: "text"
         }).done(function (data) {
@@ -153,48 +144,63 @@ if (isset($_GET['exit'])) {
 
     fetch_data();
 
-    $(document).on('blur', '.surnamePrep', function(){
+    $(document).on('click', '#btn_add', function(){
+        var surnameStudent = $('#surnameStudent').text()
+        var nameStudent = $('#nameStudent').text()
+        var patronicStudent = $('#patronicStudent').text()
+        if(surnameStudent == '')
+        {
+            alert("Введите фамилию студента");
+            return false;
+        }
+        if(nameStudent == '')
+        {
+            alert("Введите имя студента");
+            return false;
+        }
+        if(patronicStudent == '')
+        {
+            alert("Введите отчество студента");
+            return false;
+        }
+        add_data(surnameStudent, nameStudent, patronicStudent);
+    });
+
+    $(document).on('blur', '.surnameStudent', function(){
         var id = $(this).data("idSurname");
         var changeSurname = $(this).text();
         edit_data(id, changeSurname, "surname");
         fetch_data();
     });
-    $(document).on('blur', '.namePrep', function(){
+    $(document).on('blur', '.nameStudent', function(){
         var id = $(this).data("idName");
         var changeName = $(this).text();
         edit_data(id, changeName, "name");
         fetch_data();
     });
-    $(document).on('blur', '.patronicPrep', function(){
+    $(document).on('blur', '.patronicStudent', function(){
         var id = $(this).data("idPatronic");
         var changePatronic = $(this).text();
         edit_data(id, changePatronic, "patronic");
         fetch_data();
     });
 
-    $(document).on('blur', '.loginPrep', function(){
-        var id = $(this).data("idLogin");
-        var changeLogin = $(this).text();
-        edit_data(id, changeLogin, "prepod_login");
-        fetch_data();
-    });
-
-    $(document).on('blur', '.groupPrep', function(){
+    $(document).on('blur', '.groupStudent', function(){
         var id = $(this).data("idGroup");
         var changeGroup = $(this).text();
         //edit_data(id, changeGroup, "group");
         fetch_data();
     });
 
-    $(document).on('click', '.deletePrep', function(){
+    $(document).on('click', '.deleteStudent', function(){
         var id = $(this).data("idDel");
         if(confirm("Вы уверены, что хотите удалить это?")) {
             delete_data(id);
         }
     });
-
 </script>
 
 <script src="../js/bootstrap.min.js"></script>
+
 </body>
 </html>

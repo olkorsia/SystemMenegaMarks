@@ -21,7 +21,9 @@ class PrepodSemestr
         if ($result->rowCount() > 0) {
             echo '<option selected disabled>Выберите семестр</option>';
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo '<option value="' . $row['semestr'] . '">' . $row['semestr'] . '</option>';
+                if ($row["semestr"] != 0) {
+                    echo '<option value="' . $row['semestr'] . '">' . $row['semestr'] . '</option>';
+                }
             }
         } else {
             echo '<option selected disabled>Нет добавленых семестров</option>';
@@ -35,7 +37,11 @@ class PrepodSemestr
 
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo '<option value="' . $row['semestr'] . '">' . $row['semestr'] . '</option>';
+                if ($row["semestr"] != 0) {
+                    echo '<option value="' . $row['semestr'] . '">' . $row['semestr'] . '</option>';
+                } else {
+                    echo '<option disabled>Нет добавленых семестров</option>';
+                }
             }
         } else {
             echo '<option selected disabled>Нет добавленых семестров</option>';
