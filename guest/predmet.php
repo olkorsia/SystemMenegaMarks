@@ -1,5 +1,12 @@
 <?php
 session_start();
+require_once "../controller/GuestTablePredmet.php";
+
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'student') {
+    header("Location: /guest/search_student.php");
+} else {
+    $cgtablepred = new GuestTablePredmet();
+}
 
 if (isset($_GET['exit'])) {
     session_unset();
@@ -40,7 +47,6 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Оценки</a></li>
                         <li class="active"><a href="predmet.php">Предметы</a></li>
-                        <li><a href="results.php">Итоги</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -61,69 +67,34 @@ if (isset($_GET['exit'])) {
 
 <div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
 
-    <div class="form-inline">
-        <div class="form-group">
-            <p class="form-control-static"><strong>Выберите предмет: </strong></p>
-        </div>
+    <div style="margin-bottom: 30px;">
         <div class="form-group">
             <select class="form-control" id="selectPredmetStudent">
-                <option>ИЗВП</option>
-                <option>ОПИ</option>
-                <option>ПП</option>
+                <?php
+                    $cgtablepred->selectorOptionPredmet();
+                ?>
             </select>
         </div>
-        <div class="form-group">
-            <button class="btn btn-default" id="btnSelectPredmetStudent">Выбать</button>
-        </div>
     </div>
 
-    <br/>
+    <div id="tablePredmet">
 
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <tr>
-                <td>Тема 1</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 2</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 3</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 4</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 5</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 6</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 7</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 8</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 9</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Тема 10</td>
-                <td>5</td>
-            </tr>
-        </table>
     </div>
 </div>
+
+<script type="text/javascript">
+    $("#selectPredmetStudent").change(function () {
+        idPredmet = $("#selectPredmetStudent option:selected").val();
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../ajax/ajax_guest_predmet_table.php",
+            data: ({id_predmet: idPredmet})
+        }).done(function (data) {
+            $("#tablePredmet").html(data);
+        });
+    });
+</script>
 
 <script src="../js/bootstrap.min.js"></script>
 </body>

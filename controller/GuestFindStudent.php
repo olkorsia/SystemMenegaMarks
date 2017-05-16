@@ -10,16 +10,6 @@ class GuestFindStudent
         $this->_db = connectDB::getInstance();
     }
 
-    public function search1($str) {
-        $exp = explode(" ", $str);
-        $surname = $exp[0];
-        $name = $exp[1];
-
-        echo $surname . "<br/>";
-        echo $name;
-    }
-
-
     public function search($surname) {
         try {
             $sql = "SELECT id, name, surname, patronic FROM students WHERE surname='$surname'";
@@ -60,9 +50,7 @@ class GuestFindStudent
             $sql = "SELECT id, name, surname, patronic FROM students WHERE id='$student_id'";
             $result = $this->_db->query($sql);
 
-            echo "SQL work";
             if ($result->rowCount() == 1) {
-                echo "IF ok";
                 session_start();
                 $_SESSION['auth'] = 'student';
                 while ($row = $result->fetch(PDO::FETCH_ASSOC))

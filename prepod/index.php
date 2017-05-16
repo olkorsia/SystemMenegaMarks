@@ -5,7 +5,7 @@ require_once "../controller/PrepodSemestr.php";
 require_once "../controller/PrepodGroup.php";
 require_once "../controller/PrepodTable.php";
 
-if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'prepod') {
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'prepod') {
     header("Location: /");
 } else {
     $cpred = new PrepodPredmet();
@@ -209,7 +209,7 @@ if (isset($_GET['exit'])) {
         });
     });
 
-    function output_table() {
+    function output_table_mark() {
         $.ajax({
             type: "POST",
             url: "../ajax/ajax_mainMarksTable.php",
@@ -227,7 +227,7 @@ if (isset($_GET['exit'])) {
             dataType:"text"
         }).done(function (data) {
             $("#mainSubjectTable").html(data);
-            output_table();
+            output_table_mark();
         });
     }
 
@@ -310,7 +310,7 @@ if (isset($_GET['exit'])) {
         var id = $(this).data("idSubject");
         var changeSubject = $(this).text();
         edit_data_subject(id, changeSubject);
-        output_table_subject_and_marks();
+        output_table_mark();
     });
 
     $(document).on('blur', '.changeMark', function(){

@@ -1,9 +1,9 @@
 <?php
 session_start();
-require "../controller/prepod.php";
+//require "../controller/prepod.php";
 $pred = new Predmet;
 
-if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'prepod') {
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'prepod') {
     header("Location: /");
 }
 ?>

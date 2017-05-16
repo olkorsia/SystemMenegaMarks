@@ -2,7 +2,7 @@
 session_start();
 require_once "../controller/PrepodSettings.php";
 
-if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'prepod') {
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'prepod') {
     header("Location: /");
 }
 if (isset($_GET['exit'])) {

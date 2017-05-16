@@ -1,6 +1,7 @@
 <?php
 session_start();
-require "../controller/GuestFindStudent.php";
+require_once "../controller/GuestFindStudent.php";
+
 $gfs = new GuestFindStudent();
 ?>
 <!DOCTYPE html>
@@ -13,12 +14,6 @@ $gfs = new GuestFindStudent();
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/shadows.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <style type="text/css">
-        .selectorMargin {
-            margin-right: 4px;
-            margin-left: 4px;
-        }
-    </style>
 </head>
 <body style="background-image: url('../images/background.jpg');">
 

@@ -2,7 +2,7 @@
 session_start();
 require_once "../controller/AdminGroup.php";
 
-if (!isset($_SESSION['auth']) && !$_SESSION['auth'] == 'admin') {
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'admin') {
     header("Location: /");
 }
 
