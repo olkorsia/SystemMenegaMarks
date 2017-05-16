@@ -59,7 +59,7 @@ class PrepodManageStudent
         $result = $this->_db->query($sql);
 
         if ($result == true) {
-            echo "Группа успешно удален";
+            echo "Студент успешно удален";
         }
     }
 }

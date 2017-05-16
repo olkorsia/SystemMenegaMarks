@@ -75,7 +75,7 @@ if (isset($_GET['exit'])) {
 </div>
 <!--//MENU NAVBAR-->
 
-<div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
+<div class="container shadow-left-right-bottom" style="height:1000px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
 
     <!--Вывод всех предметов-->
     <div class="col-sm-4 col-md-4">
@@ -90,9 +90,9 @@ if (isset($_GET['exit'])) {
                 $cpred->modalWindowAddPredmet();
             ?>
 
-            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#buttonDelPredmet">
+            <!--button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#buttonDelPredmet">
                 Удалить
-            </button>
+            </button-->
         </div>
         <div class="form-group">
             <select class="form-control" id="selectorPredmets">
@@ -153,18 +153,12 @@ if (isset($_GET['exit'])) {
     </div>
 
     <div class="col-sm-12 col-md-12">
-        <div>
-            <p align="center">Subject</p>
-        </div>
         <div id="mainSubjectTable">
 
         </div>
     </div>
 
     <div class="col-sm-12 col-md-12">
-        <div>
-            <p align="center">Marks</p>
-        </div>
         <div id="mainMarksTable">
 
         </div>
@@ -215,8 +209,17 @@ if (isset($_GET['exit'])) {
         });
     });
 
-    $("#selectorGroups").change(function () {
-        group = $("#selectorGroups option:selected").val();
+    function output_table() {
+        $.ajax({
+            type: "POST",
+            url: "../ajax/ajax_mainMarksTable.php",
+            data: ({id_predmet: idPredmet, semestr: semestr, id_group: group})
+        }).done(function (data) {
+            $("#mainMarksTable").html(data);
+        });
+    }
+
+    function output_table_subject_and_marks() {
         $.ajax({
             type: "POST",
             url: "../ajax/ajax_mainSubjectTable.php",
@@ -226,15 +229,11 @@ if (isset($_GET['exit'])) {
             $("#mainSubjectTable").html(data);
             output_table();
         });
-        function output_table() {
-            $.ajax({
-                type: "POST",
-                url: "../ajax/ajax_mainMarksTable.php",
-                data: ({id_predmet: idPredmet, semestr: semestr, id_group: group})
-            }).done(function (data) {
-                $("#mainMarksTable").html(data);
-            });
-        }
+    }
+
+    $("#selectorGroups").change(function () {
+        group = $("#selectorGroups option:selected").val();
+        output_table_subject_and_marks();
     });
 
     $("#selectorPredmetForAddGroup").change(function () {
@@ -249,58 +248,52 @@ if (isset($_GET['exit'])) {
         });
     });
 
-</script>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-<script type="text/javascript">
-    function fetch_data() {
-        $.ajax({
-            type: "POST",
-            async: false,
-            url: "../ajax/ajax_prep_student_output.php"
-        }).done(function (data) {
-            $("#dataTableStudentPrepod").html(data);
-        });
-    }
-
-    function add_data(subjectName, mainId) {
+    function add_data_subject(subjectName, mainId) {
         $.ajax({
             url:"../ajax/ajax_prep_subject_add.php",
             type:"POST",
-            async: false,
             data: ({subject_name:subjectName, main_id:mainId}),
             dataType:"text"
         }).done(function (data) {
             alert(data);
-            //fetch_data();
+            output_table_subject_and_marks();
         });
     }
 
-    function edit_data(id, text, column_name) {
+    function edit_data_subject(id, text) {
         $.ajax({
             type: "POST",
-            async: false,
-            url: "../ajax/ajax_prep_student_edit.php",
-            data: ({id:id, text:text, column_name:column_name}),
+            url: "../ajax/ajax_prep_subject_edit.php",
+            data: ({id:id, text:text}),
             dataType: "text"
         }).done(function (data) {
             alert(data);
         });
     }
 
-    function delete_data(id) {
+    function edit_data_mark(id, text) {
         $.ajax({
             type: "POST",
             async: false,
-            url:"../ajax/ajax_prep_student_del.php",
+            url: "../ajax/ajax_prep_mark_edit.php",
+            data: ({id:id, text:text}),
+            dataType: "text"
+        });
+    }
+
+    function delete_data_subject(id) {
+        $.ajax({
+            type: "POST",
+            url:"../ajax/ajax_prep_subject_del.php",
             data: ({id:id}),
             dataType: "text"
         }).done(function (data) {
             alert(data);
-            fetch_data();
+            output_table_subject_and_marks();
         });
     }
-
-    //fetch_data();
 
     $(document).on('click', '#btn_add_subject', function(){
         var subjectName = $('#newSubjectForMarks').text();
@@ -310,39 +303,27 @@ if (isset($_GET['exit'])) {
             alert("Введите тему");
             return false;
         }
-        add_data(subjectName, mainId);
+        add_data_subject(subjectName, mainId);
     });
 
-    $(document).on('blur', '.surnameStudent', function(){
-        var id = $(this).data("idSurname");
-        var changeSurname = $(this).text();
-        edit_data(id, changeSurname, "surname");
-        fetch_data();
-    });
-    $(document).on('blur', '.nameStudent', function(){
-        var id = $(this).data("idName");
-        var changeName = $(this).text();
-        edit_data(id, changeName, "name");
-        fetch_data();
-    });
-    $(document).on('blur', '.patronicStudent', function(){
-        var id = $(this).data("idPatronic");
-        var changePatronic = $(this).text();
-        edit_data(id, changePatronic, "patronic");
-        fetch_data();
+    $(document).on('blur', '.nameSubject', function(){
+        var id = $(this).data("idSubject");
+        var changeSubject = $(this).text();
+        edit_data_subject(id, changeSubject);
+        output_table_subject_and_marks();
     });
 
-    $(document).on('blur', '.groupStudent', function(){
-        var id = $(this).data("idGroup");
-        var changeGroup = $(this).text();
-        //edit_data(id, changeGroup, "group");
-        fetch_data();
+    $(document).on('blur', '.changeMark', function(){
+        var id = $(this).data("idMark");
+        var changeMark = $(this).text();
+        edit_data_mark(id, changeMark);
+        output_table_subject_and_marks();
     });
 
-    $(document).on('click', '.deleteStudent', function(){
+    $(document).on('click', '.deleteSubject', function(){
         var id = $(this).data("idDel");
         if(confirm("Вы уверены, что хотите удалить это?")) {
-            delete_data(id);
+            delete_data_subject(id);
         }
     });
 </script>
