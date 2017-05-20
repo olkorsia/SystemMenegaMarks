@@ -47,7 +47,7 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Предметы</a></li>
                         <li class="active"><a href="group.php">Группы</a></li>
-                        <li><a href="student.php">Студенты</a></li>
+                        <!--li><a href="student.php">Студенты</a></li-->
                         <li><a href="prep.php">Преподователи</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -83,7 +83,8 @@ if (isset($_GET['exit'])) {
         <table class="table table-striped">
             <thead>
             <tr>
-                <td width="90%"><b>Группа</b></td>
+                <td width="55%"><b>Группа</b></td>
+                <td width="40%"><b>Куратор группы</b></td>
                 <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
             </thead>
@@ -110,15 +111,13 @@ if (isset($_GET['exit'])) {
         });
     }
 
-    function edit_data(id, text) {
+    function edit_data(id, text, columnName) {
         $.ajax({
             type: "POST",
             async: false,
             url: "../ajax/ajax_admin_group_edit.php",
-            data: ({id:id, text:text}),
+            data: ({id:id, text:text, column_name:columnName}),
             dataType: "text"
-        }).done(function (data) {
-            alert(data);
         });
     }
 
@@ -140,7 +139,16 @@ if (isset($_GET['exit'])) {
     $(document).on('blur', '.nameGroup', function(){
         var id = $(this).data("id");
         var changePredmet = $(this).text();
-        edit_data(id, changePredmet);
+        edit_data(id, changePredmet, "name");
+        fetch_data();
+    });
+
+    $(document).on('change', '.managePrepod', function () {
+        var idGroup = $(this).data("idGroup");
+        var idPrepod = $(this).find('option:selected').val();
+        if (confirm("Вы уверены что хотите изменить куратора группы?")) {
+            edit_data(idGroup, idPrepod, "manage_id");
+        }
         fetch_data();
     });
 

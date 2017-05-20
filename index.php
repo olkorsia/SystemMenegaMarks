@@ -1,7 +1,6 @@
 <?php
 session_start();
-require "controller/Authorization.php";
-require "controller/Registration.php";
+require_once "controller/Authorization.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,15 +51,15 @@ if ($_SESSION['auth'] == 'prepod') {
 							<div class="col-lg-12">
 								<form id="login-form" method="POST" role="form" style="display: block;">
 									<div class="form-group">
-										<input type="text" name="login" id="login" class="form-control" placeholder="Логин" required>
+										<input type="text" name="login" class="form-control" placeholder="Логин" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="password" class="form-control" placeholder="Пароль" required>
+										<input type="password" name="password" class="form-control" placeholder="Пароль" required>
 									</div>
 									<div class="form-group">
 										<div class="row col-sm-offset-1">
 											<div class="col-sm-5">
-												<input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-login" value="Войти">
+												<input type="submit" name="login-submit" class="form-control btn btn-login" value="Войти">
 											</div>
 											<div class="col-sm-5">
 												<a href="guest/search_student.php" class="form-control btn btn-login">Войти как студент</a>
@@ -68,32 +67,32 @@ if ($_SESSION['auth'] == 'prepod') {
 										</div>
 									</div>
 								</form>
-								<form id="register-form" method="POST" role="form" style="display: none;">
+								<form id="register-form" method="POST" style="display: none;">
 									<div class="form-group">
-										<input type="text" name="name" id="name" class="form-control" placeholder="Имя" required>
+										<input type="text" id="name" class="form-control" placeholder="Имя" required>
 									</div>
 									<div class="form-group">
-										<input type="text" name="surname" id="surname" class="form-control" placeholder="Фамилия" required>
+										<input type="text" id="surname" class="form-control" placeholder="Фамилия" required>
 									</div>
 									<div class="form-group">
-										<input type="text" name="patronic" id="password" class="form-control" placeholder="Отчество" required>
+										<input type="text" id="patronic" class="form-control" placeholder="Отчество" required>
 									</div>
 									<div class="form-group">
-										<input type="text" name="login" id="login" class="form-control" placeholder="Логин" required>
+										<input type="text" id="number-phone" class="form-control" placeholder="Номер телефона" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="password" class="form-control" placeholder="Пароль" required>
+										<input type="text" id="login" class="form-control" placeholder="Логин" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="confirm-password" id="confirm-password" class="form-control" placeholder="Подтверждение пароля" required>
+										<input type="password" id="password" class="form-control" placeholder="Пароль" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="enter_key" id="enter_key" class="form-control" placeholder="Ключ регистрации" required>
+										<input type="password" id="confirm-password" class="form-control" placeholder="Подтверждение пароля" required>
 									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register-submit" id="register-submit" class="form-control btn btn-register" value="Зарегистрировать">
+												<input type="button" id="register-submit" class="form-control btn btn-register" value="Зарегистрировать">
 											</div>
 										</div>
 									</div>
@@ -105,6 +104,16 @@ if ($_SESSION['auth'] == 'prepod') {
 			</div>
 		</div>
 	</div>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="alertContent">
+                </div>
+            </div>
+        </div>
+    </div>
 HTML;
 }
 
@@ -114,23 +123,36 @@ if (isset($_POST['login-submit'])) {
     $auth = new Authorization;
     $auth->enter($login, $password);
 }
-
-if (isset($_POST['register-submit'])) {
-    if ($_POST['password'] != $_POST['confirm-password']) {
-        echo "Пароли не совподают";
-    } else {
-        $name = trim($_POST['name']);
-        $surname = trim($_POST['surname']);
-        $patronic = trim($_POST['patronic']);
-        $login = trim($_POST['login']);
-        $password_shifr = $_POST['password'];
-        $key = trim($_POST['enter_key']);
-
-        $reg = new Registration;
-        $reg->registration($name, $surname, $patronic, $login, $password_shifr, $key);
-    }
-}
 ?>
+
+<script type="text/javascript">
+    function addPrepod(name, surname, patronic, numberPhone, login, password) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url:"../ajax/ajax_regestration.php",
+            data: ({name:name, surname:surname, patronic:patronic, numberPhone:numberPhone, login:login, password:password}),
+            dataType: "text"
+        }).done(function (data) {
+            $("#alertContent").html(data);
+        });
+    }
+
+    $(document).on("click", "#register-submit", function () {
+        var password = $("#password").val();
+        var confPassword = $("#confirm-password").val();
+        if (password == confPassword) {
+            var name = $("#name").val();
+            var surname = $("#surname").val();
+            var patronic = $("#patronic").val();
+            var numberPhone = $("#number-phone").val();
+            var login = $("#login").val();
+            addPrepod(name, surname, patronic, numberPhone, login, password);
+        } else {
+            alert("Пароли не совпадают");
+        }
+    });
+</script>
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/login_registration_form.js"></script>

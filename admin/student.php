@@ -79,7 +79,6 @@ if (isset($_GET['exit'])) {
                     <td width="20%"><b>Имя</b></td>
                     <td width="20%"><b>Отчество</b></td>
                     <td width="20%"><b>Группа</b></td>
-                    <td width="15%"><b>Изменить группу</b></td>
                     <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
                 </tr>
                 </thead>

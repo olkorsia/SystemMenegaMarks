@@ -47,7 +47,7 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.php">Предметы</a></li>
                         <li><a href="group.php">Группы</a></li>
-                        <li><a href="student.php">Студенты</a></li>
+                        <!--li><a href="student.php">Студенты</a></li-->
                         <li><a href="prep.php">Преподователи</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

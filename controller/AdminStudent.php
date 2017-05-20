@@ -21,8 +21,7 @@ class AdminStudent
                 echo '<td width="20%" class="surnameStudent" data-id-surname='.$row["id"].' contenteditable>'.$row["surname"].'</td>';
                 echo '<td width="20%" class="nameStudent" data-id-name='.$row["id"].' contenteditable>'.$row["name"].'</td>';
                 echo '<td width="20%" class="patronicStudent" data-id-patronic='.$row["id"].' contenteditable>'.$row["patronic"].'</td>';
-                echo '<td width="20%" class="groupStudent" data-id-group='.$row["id"].' contenteditable>'.$row["gname"].'</td>';
-                echo '<td align="center" width="15%"><span class="glyphicon glyphicon-cog" data-id-conf="'.$row["id"].'"></span></td>';
+                echo '<td width="20%" class="groupStudent" data-id-group='.$row["id"].'>'.$row["gname"].'</td>';
                 echo '<td align="center" width="5%"><span class="glyphicon glyphicon-trash deleteStudent" data-id-del="'.$row["id"].'"></span></td>';
                 echo '</tr>';
             }

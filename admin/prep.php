@@ -47,7 +47,7 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Предметы</a></li>
                         <li><a href="group.php">Группы</a></li>
-                        <li><a href="student.php">Студенты</a></li>
+                        <!--li><a href="student.php">Студенты</a></li-->
                         <li class="active"><a href="prep.php">Преподователи</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -78,8 +78,9 @@ if (isset($_GET['exit'])) {
                     <td width="20%"><b>Фамилия</b></td>
                     <td width="20%"><b>Имя</b></td>
                     <td width="20%"><b>Отчество</b></td>
-                    <td width="20%"><b>Логин</b></td>
-                    <td width="15%"><b>Куратор группы</b></td>
+                    <td width="15%"><b>Логин</b></td>
+                    <td width="15%"><b>Номер телефона</b></td>
+                    <td width="5%"><b>Подтвердить</b></td>
                     <td align="center" width="5%"><span class="glyphicon glyphicon-trash"></span></td>
                 </tr>
                 </thead>
@@ -89,24 +90,6 @@ if (isset($_GET['exit'])) {
             </table>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>
@@ -133,8 +116,6 @@ if (isset($_GET['exit'])) {
             url: "../ajax/ajax_admin_prep_edit.php",
             data: ({id:id, text:text, column_name:column_name}),
             dataType: "text"
-        }).done(function (data) {
-            alert(data);
         });
     }
 
@@ -152,6 +133,18 @@ if (isset($_GET['exit'])) {
     }
 
     fetch_data();
+
+    $(document).on('click', '.confirmUser', function () {
+        var confirmId = $(this).data("idConfirm");
+        edit_data(confirmId, 1, "confirm");
+        fetch_data();
+    });
+
+    $(document).on('click', '.deconfirmUser', function () {
+        var deconfirmId = $(this).data("idDeconfirm");
+        edit_data(deconfirmId, 0, "confirm");
+        fetch_data();
+    });
 
     $(document).on('blur', '.surnamePrep', function(){
         var id = $(this).data("idSurname");
