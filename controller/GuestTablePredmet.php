@@ -29,15 +29,22 @@ class GuestTablePredmet
         echo '<div class="table-responsive">';
         echo '<table class="table table-bordered">';
 
+        echo '<thead><tr>';
+        echo '<td width="80%">Тема</td>';
+        echo '<td width="20%">Оценка</td>';
+        echo '</tr></thead>';
+        echo '<tbody>';
+
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             echo '<tr>';
-            echo '<td>'.$row["name"].'</td>';
-            echo '<td>'.$row["mark"].'</td>';
+            echo '<td width="80%">'.$row["name"].'</td>';
+            echo '<td width="20%">'.$row["mark"].'</td>';
             echo '</tr>';
         }
 
-        echo '</div>';
+        echo '</tbody>';
         echo '</table>';
+        echo '</div>';
     }
 }
 

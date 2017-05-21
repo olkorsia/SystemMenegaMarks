@@ -1,8 +1,11 @@
 <?php
 session_start();
+require_once "../controller/PrepodManageStudent.php";
 
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'prepod') {
     header("Location: /");
+} else {
+    $cpgroup = new PrepodManageStudent();
 }
 
 if (isset($_GET['exit'])) {
@@ -44,7 +47,7 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Главная</a></li>
                         <?php
-                        if ($_SESSION["prepod_group"] != 0) {
+                        if ($_SESSION['manage_group']) {
                             echo '<li class="active"><a href="managegroupe.php">Управление группой</a></li>';
                         }
                         ?>
@@ -68,7 +71,16 @@ if (isset($_GET['exit'])) {
 <!--//MENU NAVBAR-->
 
 <div class="container shadow-left-right-bottom" style="height:800px; margin-top:-20px; padding-top: 20px; background-color: #fff;">
-    <p align="center">Ваша группа:  <?php echo $_SESSION["group_name"]; ?></p>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="selectorChangeGroup">Выберите группу:</label>
+            <select class="form-control" id="selectorChangeGroup">
+                <?php
+                    $cpgroup->outputToSelectorManageGroup();
+                ?>
+            </select>
+        </div>
+    </div>
     <div style="margin-top: 30px;">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -94,11 +106,14 @@ if (isset($_GET['exit'])) {
 
 
 <script type="text/javascript">
+    var idGroup = $('#selectorChangeGroup option:selected').val();
+
     function fetch_data() {
         $.ajax({
             type: "POST",
             async: false,
-            url: "../ajax/ajax_prep_student_output.php"
+            url: "../ajax/ajax_prep_student_output.php",
+            data: ({group_id:idGroup})
         }).done(function (data) {
             $("#dataTableStudentPrepod").html(data);
         });
@@ -109,7 +124,7 @@ if (isset($_GET['exit'])) {
             url:"../ajax/ajax_prep_student_add.php",
             type:"POST",
             async: false,
-            data: ({surname_student:surnameStudent, name_student:nameStudent, patronic_student:patronicStudent}),
+            data: ({surname_student:surnameStudent, name_student:nameStudent, patronic_student:patronicStudent, group_id:idGroup}),
             dataType:"text"
         }).done(function (data) {
             alert(data);
@@ -143,6 +158,11 @@ if (isset($_GET['exit'])) {
     }
 
     fetch_data();
+
+    $("#selectorChangeGroup").change(function () {
+        idGroup = $("#selectorChangeGroup option:selected").val();
+        fetch_data();
+    });
 
     $(document).on('click', '#btn_add', function(){
         var surnameStudent = $('#surnameStudent').text()

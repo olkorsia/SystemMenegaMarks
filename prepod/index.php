@@ -52,7 +52,7 @@ if (isset($_GET['exit'])) {
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.php">Главная</a></li>
                         <?php
-                            if ($_SESSION["prepod_group"] != 0) {
+                            if ($_SESSION["manage_group"]) {
                                 echo '<li><a href="managegroupe.php">Управление группой</a></li>';
                             }
                         ?>
@@ -89,10 +89,6 @@ if (isset($_GET['exit'])) {
             <?php
                 $cpred->modalWindowAddPredmet();
             ?>
-
-            <!--button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#buttonDelPredmet">
-                Удалить
-            </button-->
         </div>
         <div class="form-group">
             <select class="form-control" id="selectorPredmets">

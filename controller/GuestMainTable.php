@@ -22,6 +22,10 @@ class GuestMainTable
 
         echo '<div class="table-responsive">';
         echo '<table class="table table-bordered">';
+        echo '<thead><tr><td></td><td>T1</td><td>T2</td><td>T3</td><td>T4</td><td>T5</td><td>T6</td><td>T7</td><td>T8</td><td>T9</td><td>T10</td><td>T11</td><td>T12</td></tr></thead>';
+
+        echo '<tbody>';
+
 
         while ($main_row = $main_result->fetch(PDO::FETCH_ASSOC)) {
             echo '<tr>';
@@ -36,6 +40,7 @@ class GuestMainTable
             echo '</tr>';
         }
 
+        echo '</tbody>';
         echo '</table>';
         echo '</div>';
     }

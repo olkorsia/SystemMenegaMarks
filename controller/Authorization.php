@@ -37,18 +37,17 @@
                                 $_SESSION['surname'] = $row['surname'];
                                 $_SESSION['patronic'] = $row['patronic'];
                                 $_SESSION['numberPhone'] = $row['number_phone'];
-                                //$_SESSION['prepod_group'] = $row['group_id'];
+
+                            }
+                            $sql_group = "SELECT id FROM groups WHERE manage_id='".$_SESSION['prepod_id']."'";
+                            $result_group = $this->_db->query($sql_group);
+                            if ($result_group->rowCount() > 0) {
+                                $_SESSION['manage_group'] = true;
                             }
                             header("Location: /prepod");
                         } else {
                             echo '<script>alert("Вы не подтверждены как преподаватель. Попробуйте войти позднее");</script>';
                         }
-
-                        /*$sql_group = "SELECT name FROM groups WHERE id='".$_SESSION['prepod_group']."'";
-                        $result_group = $this->_db->query($sql_group);
-                        $_SESSION['group_name'] = $result_group->fetch(PDO::FETCH_ASSOC)["name"];*/
-
-
                     } else {
                         echo '<div class="container"><div class="row"><div class="col-md-6 col-md-offset-3">
 		                    <div class="alert alert-danger" role="alert" style="text-align: center">Не удается войти. Проверьте правильность написания логина и пароля.</div>

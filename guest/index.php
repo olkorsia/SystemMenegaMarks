@@ -9,7 +9,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'student') {
 if (isset($_GET['exit'])) {
     session_unset();
     session_destroy();
-    header("Location: /");
+    header("Location: /guest/");
 }
 ?>
 <!DOCTYPE html>

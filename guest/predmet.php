@@ -11,7 +11,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] != 'student') {
 if (isset($_GET['exit'])) {
     session_unset();
     session_destroy();
-    header("Location: /");
+    header("Location: /guest/");
 }
 ?>
 <!DOCTYPE html>
@@ -83,8 +83,9 @@ if (isset($_GET['exit'])) {
 </div>
 
 <script type="text/javascript">
-    $("#selectPredmetStudent").change(function () {
-        idPredmet = $("#selectPredmetStudent option:selected").val();
+    var idPredmet = $("#selectPredmetStudent option:selected").val();
+
+    function fetch_data() {
         $.ajax({
             type: "POST",
             async: false,
@@ -93,6 +94,11 @@ if (isset($_GET['exit'])) {
         }).done(function (data) {
             $("#tablePredmet").html(data);
         });
+    }
+    fetch_data();
+    $("#selectPredmetStudent").change(function () {
+        idPredmet = $("#selectPredmetStudent option:selected").val();
+        fetch_data();
     });
 </script>
 

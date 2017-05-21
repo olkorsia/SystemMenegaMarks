@@ -15,9 +15,7 @@ class PrepodGroup
 
     public function selectGroupForPredmet($predmet_id, $semestr)
     {
-        $id_prepod = $_SESSION['prepod_id'];
-
-        $sql = "SELECT groups.id, groups.name FROM main inner join groups ON main.group_id=groups.id WHERE main.prepod_id='$id_prepod' AND main.predmet_id='$predmet_id' AND main.semestr = '$semestr'";
+        $sql = "SELECT groups.id, groups.name FROM main inner join groups ON main.group_id=groups.id WHERE main.prepod_id='$this->prepod_id' AND main.predmet_id='$predmet_id' AND main.semestr = '$semestr'";
         $result = $this->_db->query($sql);
 
         if ($result->rowCount() > 0) {

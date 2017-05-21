@@ -43,6 +43,11 @@ if (isset($_GET['exit'])) {
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Главная</a></li>
+                        <?php
+                            if ($_SESSION["manage_group"]) {
+                                echo '<li><a href="managegroupe.php">Управление группой</a></li>';
+                            }
+                        ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
