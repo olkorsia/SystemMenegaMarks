@@ -91,12 +91,6 @@ HTML;
         }
     }
 
-    public function addPredmetOfInputText($name_new_predmet)
-    {
-
-
-    }
-
 }
 
 ?>

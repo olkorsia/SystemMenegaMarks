@@ -26,7 +26,7 @@ if ($_SESSION['auth'] == 'prepod') {
 
 } elseif ($_SESSION['auth'] == 'admin') {
 
-    header('Location: /admin_index.php');
+    header('Location: /admin');
 
 } elseif ($_SESSION['auth'] == 0 || empty($_SESSION['auth'])) {
     echo <<<HTML
