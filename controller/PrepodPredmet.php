@@ -20,6 +20,7 @@ class PrepodPredmet
         $sql = "SELECT distinct predmet.id, predmet.name FROM `main` inner join `predmet` ON main.predmet_id=predmet.id WHERE main.prepod_id='$id_prepod'";
         $result = $this->_db->query($sql);
 
+        echo "<option selected disabled>Выберите предмет</option>";
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
@@ -83,6 +84,7 @@ HTML;
 
             if ($result == true) {
                 echo "Predmet added";
+                echo "<script>getPredmet();</script>";
             } else {
                 echo "Predmeta nety y dannogo prepodovatelya i on ne dobavilsya";
             }

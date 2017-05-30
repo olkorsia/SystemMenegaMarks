@@ -55,8 +55,8 @@ if (isset($_GET['exit'])) {
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false"><?php echo $_SESSION['name']; ?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="settings.php">Настройки</a></li>
-                                <li role="separator" class="divider"></li>
+                                <!--li><a href="settings.php">Настройки</a></li>
+                                <li-- role="separator" class="divider"></li-->
                                 <li><a href="?exit">Выход <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
                             </ul>
                         </li>
@@ -172,14 +172,14 @@ if (isset($_GET['exit'])) {
         fetch_data();
     });
 
-    $(document).on('blur', '.groupPrep', function(){
-        var id = $(this).data("idGroup");
+    $(document).on('blur', '.numberPhonePrep', function(){
+        var id = $(this).data("idNumberPhone");
         var changeGroup = $(this).text();
-        //edit_data(id, changeGroup, "group");
+        edit_data(id, changeGroup, "number_phone");
         fetch_data();
     });
 
-    $(document).on('click', '.deletePrep', function(){
+    $(document).on('click', '.deletePrepod', function(){
         var id = $(this).data("idDel");
         if(confirm("Вы уверены, что хотите удалить это?")) {
             delete_data(id);

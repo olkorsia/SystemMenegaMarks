@@ -92,9 +92,9 @@ if (isset($_GET['exit'])) {
         </div>
         <div class="form-group">
             <select class="form-control" id="selectorPredmets">
-                <option selected disabled>Выберите предмет</option>
+
                 <?php
-                $cpred->outputAllPredmetPrepod();
+
                 ?>
             </select>
         </div>
@@ -180,6 +180,17 @@ if (isset($_GET['exit'])) {
 <!--script src="../js/prepod_ajax.js"></script-->
 <script type="text/javascript">
     var idPredmet, semestr, group;
+
+    function getPredmet() {
+        $.ajax({
+            type: "POST",
+            url: "../ajax/ajax_predmet.php"
+        }).done(function (data) {
+            $("#selectorPredmets").html(data);
+        });
+    }
+
+    getPredmet();
 
     $("#selectorPredmets").change(function () {
         idPredmet = $("#selectorPredmets option:selected").val();

@@ -23,9 +23,9 @@ class AdminPrep
                     echo '<td width="20%" class="namePrep" data-id-name="'.$row["id"].'" contenteditable>'.$row["name"].'</td>';
                     echo '<td width="20%" class="patronicPrep" data-id-patronic="'.$row["id"].'" contenteditable>'.$row["patronic"].'</td>';
                     echo '<td width="15%" class="loginPrep" data-id-login="'.$row["id"].'" contenteditable>'.$row["login"].'</td>';
-                    echo '<td width="15%" class="numberPhonePrep" data-id-number-phone="'.$row["id"].'">'.$row["number_phone"].'</td>';
+                    echo '<td width="15%" class="numberPhonePrep" data-id-number-phone="'.$row["id"].'" contenteditable>'.$row["number_phone"].'</td>';
                     echo '<td width="15%" class="confirmUser" data-id-confirm="'.$row["id"].'" style="cursor: default;">Подтвердить</td>';
-                    echo '<td align="center" width="5%"><span class="glyphicon glyphicon-trash deleteStudent" data-id-del="'.$row["id"].'"></span></td>';
+                    echo '<td align="center" width="5%"><span class="glyphicon glyphicon-trash deletePrepod" data-id-del="'.$row["id"].'"></span></td>';
                     echo '</tr>';
                 } else {
                     echo '<tr>';
@@ -33,9 +33,9 @@ class AdminPrep
                     echo '<td width="20%" class="namePrep" data-id-name="'.$row["id"].'" contenteditable>'.$row["name"].'</td>';
                     echo '<td width="20%" class="patronicPrep" data-id-patronic="'.$row["id"].'" contenteditable>'.$row["patronic"].'</td>';
                     echo '<td width="15%" class="loginPrep" data-id-login="'.$row["id"].'" contenteditable>'.$row["login"].'</td>';
-                    echo '<td width="15%" class="numberPhonePrep" data-id-number-phone="'.$row["id"].'">'.$row["number_phone"].'</td>';
+                    echo '<td width="15%" class="numberPhonePrep" data-id-number-phone="'.$row["id"].'" contenteditable>'.$row["number_phone"].'</td>';
                     echo '<td width="15%" class="deconfirmUser" data-id-deconfirm="'.$row["id"].'" style="cursor: default;">Деактивировать</td>';
-                    echo '<td align="center" width="5%"><span class="glyphicon glyphicon-trash deleteStudent" data-id-del="'.$row["id"].'"></span></td>';
+                    echo '<td align="center" width="5%"><span class="glyphicon glyphicon-trash deletePrepod" data-id-del="'.$row["id"].'"></span></td>';
                     echo '</tr>';
                 }
             }

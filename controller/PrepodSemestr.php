@@ -111,7 +111,6 @@ HTML;
 
                 if ($result == true) {
                     echo '<script type="text/javascript">alert("Семестр успешно добавлен");</script>';
-                    header("Location: /prepod/");
                 }
             } else {
                 $sql = "INSERT INTO main (prepod_id, predmet_id, semestr) VALUES ('$this->prepod_id', '$predmet_id', '$semestr')";
@@ -119,7 +118,6 @@ HTML;
 
                 if ($result == true) {
                     echo '<script type="text/javascript">alert("Семестр успешно добавлен");</script>';
-                    header("Location: /prepod/");
                 }
             }
         } else {

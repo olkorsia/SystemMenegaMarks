@@ -110,7 +110,6 @@ HTML;
             $zero_sql = "SELECT id FROM main WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr' AND group_id='0'";
             $zero_result = $this->_db->query($zero_sql);
 
-            echo $zero_result->rowCount();
             if ($zero_result->rowCount() == 1 && $zero_result == true) {
                 $update_sql = "UPDATE main SET group_id='$group_id' WHERE prepod_id='$this->prepod_id' AND predmet_id='$predmet_id' AND semestr='$semestr'";
                 $update_result = $this->_db->query($update_sql);
